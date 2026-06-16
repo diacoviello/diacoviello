@@ -1,0 +1,56 @@
+.bg-chapters {
+  display: grid;
+  gap: 1.4rem;
+  counter-reset: chapter;
+}
+.bg-chapter {
+  position: relative;
+  padding: clamp(1.6rem, 4vw, 2.4rem);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, rgba(27, 35, 71, 0.45), rgba(13, 18, 38, 0.55));
+  counter-increment: chapter;
+  overflow: hidden;
+}
+.bg-chapter::after {
+  content: counter(chapter, decimal-leading-zero);
+  position: absolute;
+  top: -0.6rem;
+  right: 1.2rem;
+  font-family: var(--font-serif);
+  font-size: 6rem;
+  line-height: 1;
+  color: rgba(233, 189, 85, 0.08);
+  pointer-events: none;
+}
+.bg-chapter__year {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.bg-chapter__title {
+  font-size: clamp(1.4rem, 3.6vw, 1.9rem);
+  margin: 0.4rem 0 0.7rem;
+}
+.bg-chapter p {
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+.bg-quote {
+  margin-top: 3rem;
+  text-align: center;
+  padding: clamp(2rem, 5vw, 3rem);
+  border-block: 1px solid var(--line);
+}
+.bg-quote p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.3rem, 4vw, 2rem);
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 760px;
+  margin-inline: auto;
+}

@@ -1,0 +1,316 @@
+/* ============================================================
+   Landing page — swirling intro + clickable yin/yang logo
+   ============================================================ */
+
+.landing {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      130% 100% at 50% 42%,
+      #131a35 0%,
+      #0c1022 48%,
+      #070a16 100%
+    );
+  display: grid;
+  place-items: center;
+}
+
+.landing-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+/* Darkened edges to focus the eye on the converging center */
+.landing-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    120% 120% at 50% 50%,
+    transparent 52%,
+    rgba(5, 7, 15, 0.55) 100%
+  );
+}
+
+.landing-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  padding: 2rem 1.25rem;
+  text-align: center;
+}
+
+.landing-eyebrow {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-indent: 0.42em;
+  opacity: 0;
+  animation: fade-down 1.4s ease forwards 0.4s;
+  text-shadow: 0 0 24px rgba(233, 189, 85, 0.35);
+}
+
+.landing-hint {
+  font-size: 0.8rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  opacity: 0;
+  animation: fade-up 1.4s ease forwards 2.4s;
+}
+
+/* ---- Split logo ------------------------------------------------ */
+
+.logo-split {
+  position: relative;
+  width: min(74vmin, 540px);
+  aspect-ratio: 1 / 1;
+  transform: scale(0.2);
+  opacity: 0;
+  animation: logo-zoom 2.2s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.6s;
+}
+
+/* Warm light behind the emblem so the black bagua + clef read on navy */
+.logo-halo {
+  position: absolute;
+  inset: -18%;
+  z-index: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 244, 214, 0.92) 0%,
+    rgba(247, 223, 160, 0.6) 26%,
+    rgba(120, 138, 190, 0.22) 52%,
+    transparent 72%
+  );
+  filter: blur(2px);
+  animation: halo-pulse 6s ease-in-out infinite 2.6s;
+}
+
+.half {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Clip each anchor to its half — this also restricts the clickable/hover hit
+   area to that side, so the two stacked anchors never steal each other's clicks. */
+.half-left {
+  clip-path: inset(0 50% 0 0);
+}
+.half-right {
+  clip-path: inset(0 0 0 50%);
+}
+
+.half-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.5s ease;
+  will-change: transform, filter;
+}
+
+/* Hover: the side moves forward (z + scale + outward shift) and glows */
+.half-left:hover,
+.half-left:focus-visible {
+  z-index: 4;
+}
+.half-right:hover,
+.half-right:focus-visible {
+  z-index: 4;
+}
+
+.half-left:hover .half-img,
+.half-left:focus-visible .half-img {
+  transform: translateX(-3.5%) scale(1.05);
+  filter: drop-shadow(0 0 18px rgba(233, 189, 85, 0.85))
+    drop-shadow(0 0 42px rgba(233, 189, 85, 0.45));
+}
+
+.half-right:hover .half-img,
+.half-right:focus-visible .half-img {
+  transform: translateX(3.5%) scale(1.05);
+  filter: drop-shadow(0 0 18px rgba(79, 211, 196, 0.85))
+    drop-shadow(0 0 42px rgba(79, 211, 196, 0.45));
+}
+
+.half:focus-visible {
+  outline: none;
+}
+
+/* ---- Side labels ---------------------------------------------- */
+
+.side-label {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.side-label--left {
+  right: 100%;
+  margin-right: clamp(0.5rem, 3vw, 2.5rem);
+  text-align: right;
+  align-items: flex-end;
+  transform: translate(12px, -50%);
+}
+.side-label--right {
+  left: 100%;
+  margin-left: clamp(0.5rem, 3vw, 2.5rem);
+  text-align: left;
+  align-items: flex-start;
+  transform: translate(-12px, -50%);
+}
+
+.side-label__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 4.4vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1;
+}
+.side-label--left .side-label__title {
+  color: var(--gold-bright);
+  text-shadow: 0 0 22px rgba(233, 189, 85, 0.5);
+}
+.side-label--right .side-label__title {
+  color: var(--cyan-bright);
+  text-shadow: 0 0 22px rgba(79, 211, 196, 0.5);
+}
+
+.side-label__sub {
+  font-family: var(--font-sans);
+  font-size: clamp(0.62rem, 1.5vw, 0.78rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* Reveal the matching label on hover/focus of each half */
+.half-left:hover ~ .side-label--left,
+.half-left:focus-visible ~ .side-label--left {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+.half-right:hover ~ .side-label--right,
+.half-right:focus-visible ~ .side-label--right {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* On small screens, labels sit under the emblem so they never clip off-screen */
+@media (max-width: 640px) {
+  .side-label {
+    top: auto;
+    bottom: -3.4rem;
+    transform: none;
+  }
+  .side-label--left {
+    right: 50%;
+    margin-right: 0.6rem;
+  }
+  .side-label--right {
+    left: 50%;
+    margin-left: 0.6rem;
+  }
+  .half-left:hover ~ .side-label--left,
+  .half-left:focus-visible ~ .side-label--left,
+  .half-right:hover ~ .side-label--right,
+  .half-right:focus-visible ~ .side-label--right {
+    transform: none;
+  }
+  .side-label__sub {
+    display: none;
+  }
+}
+
+/* ---- Keyframes ------------------------------------------------- */
+
+@keyframes logo-zoom {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes halo-pulse {
+  0%,
+  100% {
+    opacity: 0.78;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-split {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+  .landing-eyebrow,
+  .landing-hint {
+    animation: none;
+    opacity: 1;
+  }
+  .logo-halo {
+    animation: none;
+  }
+}

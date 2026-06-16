@@ -1,0 +1,198 @@
+/* ============================================================
+   Techné — app-specific layout (shell, background, footer,
+   typewriter, social). Shared primitives live in shared/ui.css.
+   ============================================================ */
+
+.techne {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-deep);
+  overflow-x: clip;
+}
+.techne-main {
+  flex: 1;
+}
+
+/* ---- Animated background: subtle code grid + cyan/green glows ---- */
+.techne-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.techne-bg__grid {
+  position: absolute;
+  inset: -10%;
+  background-image: linear-gradient(rgba(79, 211, 196, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 211, 196, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 75%);
+  animation: grid-drift 28s linear infinite;
+}
+.techne-bg__glow {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+}
+.techne-bg__glow--cyan {
+  top: -20vw;
+  right: -12vw;
+  background: radial-gradient(circle, rgba(45, 110, 105, 0.55), transparent 65%);
+  animation: glow-float-t 24s ease-in-out infinite;
+}
+.techne-bg__glow--green {
+  bottom: -22vw;
+  left: -14vw;
+  background: radial-gradient(circle, rgba(60, 95, 70, 0.5), transparent 65%);
+  animation: glow-float-t 30s ease-in-out infinite reverse;
+}
+
+@keyframes grid-drift {
+  to {
+    background-position: 48px 48px;
+  }
+}
+@keyframes glow-float-t {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-5vw, 4vw) scale(1.12);
+  }
+}
+
+.techne-main,
+.tnav,
+.tfooter {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Typewriter ---- */
+.tw {
+  color: var(--accent-bright);
+}
+.tw__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---- Social icons ---- */
+.tsocial {
+  display: flex;
+  gap: 0.7rem;
+}
+.tsocial__link {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--line-soft);
+  color: var(--ink-soft);
+  transition: transform 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease, background 0.25s ease;
+}
+.tsocial__link svg {
+  width: 19px;
+  height: 19px;
+}
+.tsocial__link:hover {
+  color: var(--accent-bright);
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.1);
+  box-shadow: 0 0 18px -4px rgba(var(--accent-rgb), 0.7);
+  transform: translateY(-3px);
+}
+
+/* ---- Footer ---- */
+.tfooter {
+  border-top: 1px solid rgba(var(--accent-rgb), 0.18);
+  background: linear-gradient(180deg, transparent, rgba(7, 10, 22, 0.9));
+  padding: 3rem 0 1.5rem;
+}
+.tfooter__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-inline: clamp(1.1rem, 4vw, 2rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.tfooter__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.tfooter__mark {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  color: var(--accent);
+}
+.tfooter__brand strong {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+}
+.tfooter__brand p {
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+}
+.tfooter__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.3rem;
+  align-content: flex-start;
+}
+.tfooter__nav a {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  transition: color 0.2s ease;
+}
+.tfooter__nav a:hover {
+  color: var(--accent);
+}
+.tfooter__right {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+.tfooter__home {
+  color: var(--gold);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+.tfooter__legal {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techne-bg__grid,
+  .techne-bg__glow {
+    animation: none;
+  }
+}

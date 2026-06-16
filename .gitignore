@@ -1,0 +1,30 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Large source / reference media — not used at runtime (the site uses the
+# optimized public/images/diablo-symbol.png). Kept out of the repo to stay lean.
+/public/images/Landing Page.png
+/public/images/landing-page-idea.mov
+/public/images/DIABLOENMUSICA SYMBOL 2025 copy.png

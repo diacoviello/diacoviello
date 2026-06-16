@@ -1,0 +1,152 @@
+/* ============================================================
+   Diablo En Música — global design tokens & reset
+   ============================================================ */
+
+:root {
+  /* Core palette — drawn from the landing mockup (deep navy + gold) */
+  --bg-deep: #0a0e1c;
+  --bg: #0c1022;
+  --bg-soft: #121833;
+  --bg-panel: #161d3d;
+  --bg-panel-2: #1b2347;
+
+  --ink: #eef1fb;
+  --ink-soft: #c5cbe6;
+  --ink-dim: #8b93b8;
+
+  /* Music = gold (yin/treble-clef side) */
+  --gold: #e9bd55;
+  --gold-bright: #f7d278;
+  --gold-deep: #b88a2e;
+
+  /* Code = cyan/teal (yang/dev side) */
+  --cyan: #4fd3c4;
+  --cyan-bright: #7ff0e3;
+  --cyan-deep: #2f9e90;
+  --code-green: #7ec77a;
+
+  --line: rgba(233, 189, 85, 0.18);
+  --line-soft: rgba(255, 255, 255, 0.08);
+
+  /* Themed accent — shared UI primitives read these. Default = gold (La Música);
+     the Techné side overrides them to cyan/green below. */
+  --accent: var(--gold);
+  --accent-bright: var(--gold-bright);
+  --accent-deep: var(--gold-deep);
+  --accent-rgb: 233, 189, 85;
+  --accent-2: var(--cyan);
+  --accent-2-rgb: 79, 211, 196;
+  --accent-contrast: #0b1020;
+
+  --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+
+  --maxw: 1120px;
+  --radius: 16px;
+  --shadow: 0 18px 50px -20px rgba(0, 0, 0, 0.7);
+
+  color-scheme: dark;
+}
+
+/* Techné = the developer / "yang" side: cyan primary, green secondary */
+.techne {
+  --accent: var(--cyan);
+  --accent-bright: var(--cyan-bright);
+  --accent-deep: var(--cyan-deep);
+  --accent-rgb: 79, 211, 196;
+  --accent-2: var(--code-green);
+  --accent-2-rgb: 126, 199, 122;
+  --accent-contrast: #04201c;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+img,
+picture,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg-deep);
+}
+
+/* Thin custom scrollbar */
+::-webkit-scrollbar {
+  width: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--gold-deep), #2a3361);
+  border-radius: 20px;
+  border: 3px solid var(--bg-deep);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
