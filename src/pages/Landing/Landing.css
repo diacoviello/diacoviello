@@ -117,40 +117,67 @@
   clip-path: inset(0 0 0 50%);
 }
 
+/* Black layer. `multiply` keeps the dark bagua/clef fully opaque while turning
+   the white areas into identity (invisible), so this copy shows only the blacks. */
 .half-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  mix-blend-mode: multiply;
   transition:
     transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
     filter 0.5s ease;
   will-change: transform, filter;
 }
 
-/* Hover: the side moves forward (z + scale + outward shift) and glows */
-.half-left:hover,
-.half-left:focus-visible {
-  z-index: 4;
+/* White layer. A second copy of the emblem blended with `screen`, which turns
+   the black areas into identity (invisible) and shows only the whites. It sits
+   above the black layer, so the two together rebuild the full emblem — but each
+   color now lives on its own layer and can pop out independently. */
+.half::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: url('/images/diablo-symbol.png') center / contain no-repeat;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.5s ease;
+  will-change: transform, filter;
 }
+
+/* Hover: the whole side moves forward in the stack */
+.half-left:hover,
+.half-left:focus-visible,
 .half-right:hover,
 .half-right:focus-visible {
   z-index: 4;
 }
 
-.half-left:hover .half-img,
-.half-left:focus-visible .half-img {
-  transform: translateX(-3.5%) scale(1.05);
-  filter: drop-shadow(0 0 18px rgba(233, 189, 85, 0.85))
-    drop-shadow(0 0 42px rgba(233, 189, 85, 0.45));
+/* La Música — WHITE section pops toward the viewer. `translateZ` through a
+   `perspective` brings the white line-work straight out of the screen (no
+   sideways slide, so the halves don't separate), while the black layer below
+   stays flat on the surface — so only the white lifts and it reads as 3D depth,
+   not a card splitting off. A soft warm glow (which survives `screen`) gives it
+   a little lift light. */
+.half-left:hover::after,
+.half-left:focus-visible::after {
+  transform: perspective(800px) translateZ(70px);
+  filter: drop-shadow(0 0 10px rgba(255, 244, 214, 0.45));
 }
 
+/* Techné — BLACK section pops toward the viewer the same way. Raised above the
+   white layer so the lifted line-work isn't occluded, with a soft dark cast
+   shadow (which survives `multiply`) so it reads as floating above the base. */
 .half-right:hover .half-img,
 .half-right:focus-visible .half-img {
-  transform: translateX(3.5%) scale(1.05);
-  filter: drop-shadow(0 0 18px rgba(79, 211, 196, 0.85))
-    drop-shadow(0 0 42px rgba(79, 211, 196, 0.45));
+  z-index: 3;
+  transform: perspective(800px) translateZ(70px);
+  filter: drop-shadow(3px 9px 10px rgba(0, 0, 0, 0.45));
 }
 
 .half:focus-visible {
