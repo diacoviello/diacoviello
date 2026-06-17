@@ -28,15 +28,21 @@ export default function Home() {
       <section className="home-hero">
         <div className="m-container home-hero__inner">
           <div className="home-hero__text">
-            <Reveal as="p" className="home-hero__eyebrow" from="up">
-              Diablo&nbsp;En&nbsp;Música
-            </Reveal>
-            <Reveal as="h1" className="home-hero__title" from="up" delay={0.08}>
-              Music with
-              <span> intention,</span>
+            <Reveal as="h1" className="home-hero__title" from="up" delay={0.15}>
+              <div style={ { fontSize: '6.5rem', letterSpacing: '0.23em' } }>
+                <i style={ { fontStyle: 'normal', fontSize: '2.3rem', verticalAlign: '55%', display: 'inline-block' } }>♬</i>
+                <span style={ { fontFamily: "'Segoe Script', cursive", fontSize: '6.5rem', fontWeight: 'bold', fontStyle: 'italic', letterSpacing: '0.03em',  display: 'inline-block' } }>Music </span>
+              </div>
+              is the<span> movement </span> <br />
+              of<span> sound </span> to 
+              <p style={ { justifyContent: 'flex-center' } }> reach 
+              the <span>  soul </span></p>
+              for the <span> education </span>
               <br />
-              design with
-              <span> precision.</span>
+              of its <span>virtue  </span><div style={ { display: 'inline', fontSize: '3.2rem', verticalAlign: '12%'  } }>♪</div>
+            </Reveal>
+            <Reveal as="p" className="home-hero__eyebrow" from="up">
+              - Plato
             </Reveal>
             <Reveal as="p" className="home-hero__lead" from="up" delay={0.16}>
               I’m David Iacoviello — a professional musician, marching-arts drill

@@ -12,7 +12,8 @@ export default function Landing() {
       <div className="landing-vignette" aria-hidden="true" />
 
       <main className="landing-stage">
-        <p className="landing-eyebrow">Diablo&nbsp;En&nbsp;Música</p>
+        <p className="landing-hint">Welcome to the homepage for</p>
+        <p className="landing-eyebrow">David&nbsp;Iacoviello</p>
 
         <div className="logo-split">
           <span className="logo-halo" aria-hidden="true" />
@@ -43,7 +44,7 @@ export default function Landing() {
           </span>
         </div>
 
-        <p className="landing-hint">Choose your side</p>
+        <p className="landing-hint">Which half would you like to explore?</p>
       </main>
     </div>
   )
