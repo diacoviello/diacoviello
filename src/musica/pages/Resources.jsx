@@ -3,45 +3,34 @@ import './Resources.css'
 
 const DRILL = [
   {
-    title: 'Opener — “Ascension”',
-    meta: 'Full Marching Band · 20XX',
-    body: 'A sweeping opener built around expanding arcs and a brass feature. Drill chart + visual concept.',
-    tag: 'Drill Chart',
+    title: '"Disarray" — Full Show',
+    meta: 'Mahwah Marching Thunderbirds · 2016',
+    body: 'A Class: "Disarray" is a show title playing off one of the main musical themes "Dis Irae"',
+    tag: 'Full Show video',
   },
   {
-    title: 'Production — “Glasswork”',
-    meta: 'Indoor Percussion · 20XX',
-    body: 'Floor design and staging for a contemporary percussion production with shifting geometric forms.',
-    tag: 'Floor Design',
+    title: '"Wonder" - Opener',
+    meta: 'Riverdell High School · 2022',
+    body: 'Exhibition Class: Show music includes music by Stevie Wonder.',
+    tag: 'Opener video',
   },
   {
-    title: 'Closer — “Echoes”',
-    meta: 'Full Marching Band · 20XX',
-    body: 'An emotional closer that resolves the show’s arc with a company-front impact moment.',
-    tag: 'Visual Program',
+    title: '"Ragnarok" — Full Show',
+    meta: 'Wayne Valley HS · 2022',
+    body: 'Open Class State Champions: This show explores the Norse mythology of Ragnarok, the end of the world.',
+    tag: 'Full Show video',
+  },
+  {
+    title: '"Nova" — Full Show',
+    meta: 'Wayne Valley HS · 2021',
+    body: 'Open Class State Champions: This show explores the concept of a supernova, the death of a star. The band had no colorguard members this year, so we had to get creative...',
+    tag: 'Full Show video',
   },
 ]
 
-const PERFORMANCES = [
-  {
-    title: 'Solo Percussion Recital',
-    meta: 'Concert Hall · 20XX',
-    body: 'A program of solo marimba and multi-percussion repertoire.',
-    tag: 'Live',
-  },
-  {
-    title: 'Ensemble Feature',
-    meta: 'Festival · 20XX',
-    body: 'Featured performance with a chamber percussion ensemble.',
-    tag: 'Live',
-  },
-  {
-    title: 'Competitive Field Show',
-    meta: 'Championship · 20XX',
-    body: 'Performance highlight from a competitive marching season.',
-    tag: 'Field',
-  },
-]
+// Add performance recordings here — the Performances section below appears
+// automatically once this array has at least one entry.
+const PERFORMANCES = []
 
 function MediaCard({ item, accent }) {
   return (
@@ -93,24 +82,26 @@ export default function Resources() {
             </div>
           </div>
 
-          <div className="m-subsection" id="performances">
-            <Reveal className="m-subhead">
-              <span className="m-subhead__num">02</span>
-              <div>
-                <h2>Performances</h2>
-                <p className="m-sec-kicker" style={{ marginTop: '0.4rem', color: 'var(--ink-dim)' }}>
-                  Live recordings from stage and field
-                </p>
+          {PERFORMANCES.length > 0 && (
+            <div className="m-subsection" id="performances">
+              <Reveal className="m-subhead">
+                <span className="m-subhead__num">02</span>
+                <div>
+                  <h2>Performances</h2>
+                  <p className="m-sec-kicker" style={{ marginTop: '0.4rem', color: 'var(--ink-dim)' }}>
+                    Live recordings from stage and field
+                  </p>
+                </div>
+              </Reveal>
+              <div className="m-grid m-grid--3">
+                {PERFORMANCES.map((item, i) => (
+                  <Reveal key={item.title} from="up" delay={i * 0.08}>
+                    <MediaCard item={item} accent="cyan" />
+                  </Reveal>
+                ))}
               </div>
-            </Reveal>
-            <div className="m-grid m-grid--3">
-              {PERFORMANCES.map((item, i) => (
-                <Reveal key={item.title} from="up" delay={i * 0.08}>
-                  <MediaCard item={item} accent="cyan" />
-                </Reveal>
-              ))}
             </div>
-          </div>
+          )}
 
           <Reveal className="res-note">
             <p>

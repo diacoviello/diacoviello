@@ -4,10 +4,9 @@ import './About.css'
 const logo = '/images/diablo-symbol.png'
 
 const INSTRUMENTS = [
-  'Percussion',
-  'Marimba',
-  'Drum Set',
-  'Front Ensemble',
+  'Trumpet',
+  'F Horn',
+  'Brass Ensemble',
   'Piano',
   'Composition',
 ]
@@ -49,21 +48,21 @@ export default function About() {
               <p>
                 I’m a professional musician and marching-arts drill designer whose
                 work lives at the intersection of <em>performance</em>,{' '}
-                <em>pedagogy</em>, and <em>visual design</em>. Whether I’m on a
+                <em>education</em>, <em>pedagogy</em>, and <em>visual design</em>. Whether I’m on a
                 stage, in a classroom, or charting a closing set for a competitive
-                ensemble, the goal is the same: tell a story the audience can feel.
+                marching ensemble, the goal is the same: tell a story the audience can feel.
               </p>
               <p>
-                My journey began with a pair of drumsticks and an obsession with
-                how rhythm moves people. That curiosity grew into a career spanning
-                live performance, private instruction, and designing the drill and
+                My journey began with a hand-me down trumpet in the 3rd grade and desire to learn all I could about music.
+                That curiosity grew into a career spanning
+                live performance, private instruction, and designing the drill &
                 visual programs that bring marching ensembles to life.
               </p>
               <p>
-                The name <strong>Diablo En Música</strong> reflects a dual nature —
-                the disciplined craft of music balanced with the playful, daring
-                spirit it takes to push an idea somewhere new. It’s the same balance
-                you’ll find across this site: art and engineering, yin and yang.
+                My journey in music has brought me through an eclectic mix of musical experiences, from classical to jazz to rock and much more.
+                I balance my musical education with a variety of knowledge obtained from personal educational endeavors that has made my approach to education
+                one that operates within a 'cross-curricular' framework. I believe that music is a universal language that can be used to connect people from all walks of life,
+                and I strive to create meaningful experiences for my students and audiences alike.
               </p>
 
               <div className="about-tags">
