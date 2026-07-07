@@ -2,29 +2,17 @@ import Reveal from '../components/Reveal.jsx'
 
 const TIMELINE = [
   {
-    date: '20XX — 20XX',
-    title: 'Master of Music',
-    org: 'University / Conservatory',
-    body: 'Advanced study in performance and pedagogy, with a focus on the marching arts and ensemble design. (Replace with your real degree & institution.)',
-  },
-  {
-    date: '20XX — 20XX',
+    date: '2007 — 2012',
     title: 'Bachelor of Music',
-    org: 'University / Conservatory',
-    body: 'Comprehensive training in theory, history, performance, and music education. Active member of the marching and concert ensembles.',
-  },
-  {
-    date: '20XX',
-    title: 'Music Education Foundations',
-    org: 'High School / Early Training',
-    body: 'Where it began — first lessons, first ensembles, and the spark that turned into a career.',
+    org: 'William Paterson University',
+    body: 'Comprehensive training in theory, history, performance, and music education. ',
   },
 ]
 
 const CERTS = [
   {
     icon: '🎓',
-    title: 'Teaching Credentials',
+    title: 'NJ State Teaching Certification in Music',
     body: 'State / district music education certification for K–12 instruction.',
   },
   {
@@ -35,7 +23,7 @@ const CERTS = [
   {
     icon: '📜',
     title: 'Adjudication Training',
-    body: 'Certified to judge and adjudicate marching and percussion ensembles.',
+    body: 'Certified to judge and adjudicate marching and percussion ensembles in USBands and TOB/TIA.',
   },
 ]
 
@@ -47,7 +35,7 @@ export default function Education() {
         <Reveal as="h1" delay={0.05}>Trained in theory &amp; the field</Reveal>
         <div className="m-divider" />
         <Reveal as="p" className="m-lead" delay={0.1}>
-          A foundation built in the conservatory and refined on the competitive
+          A foundation built in higher education and refined on the competitive
           field — formal study paired with hands-on craft.
         </Reveal>
       </header>

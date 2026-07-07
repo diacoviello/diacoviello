@@ -100,88 +100,75 @@
   animation: halo-pulse 6s ease-in-out infinite 2.6s;
 }
 
-.half {
+/* Full emblem underneath — always visible. */
+.emblem-base {
   position: absolute;
   inset: 0;
   z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 0.5s ease;
+}
+
+/* Pre-authored "popped" halves (Left.png / Right.png), each drawn at its final
+   grown-out position on the same canvas as the base. At rest they're hidden and
+   pulled toward the emblem's center; on hover the matching one grows outward to
+   its natural (reference) position with an off-white glow. */
+.emblem-pop {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  transform: scale(0.62);
+  transition:
+    transform 0.6s cubic-bezier(0.34, 1.32, 0.5, 1),
+    opacity 0.4s ease,
+    filter 0.6s ease;
+  will-change: transform, opacity, filter;
+}
+
+/* Transparent hit areas — clip-path limits each anchor's clickable/hover region
+   to its half, so the two never steal each other's hover. */
+.half {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
   display: block;
   -webkit-tap-highlight-color: transparent;
 }
-
-/* Clip each anchor to its half — this also restricts the clickable/hover hit
-   area to that side, so the two stacked anchors never steal each other's clicks. */
 .half-left {
   clip-path: inset(0 50% 0 0);
 }
 .half-right {
   clip-path: inset(0 0 0 50%);
 }
-
-/* Black layer. `multiply` keeps the dark bagua/clef fully opaque while turning
-   the white areas into identity (invisible), so this copy shows only the blacks. */
-.half-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
-  transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.5s ease;
-  will-change: transform, filter;
-}
-
-/* White layer. A second copy of the emblem blended with `screen`, which turns
-   the black areas into identity (invisible) and shows only the whites. It sits
-   above the black layer, so the two together rebuild the full emblem — but each
-   color now lives on its own layer and can pop out independently. */
-.half::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: url('/images/diablo-symbol.png') center / contain no-repeat;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  transition:
-    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.5s ease;
-  will-change: transform, filter;
-}
-
-/* Hover: the whole side moves forward in the stack */
-.half-left:hover,
-.half-left:focus-visible,
-.half-right:hover,
-.half-right:focus-visible {
-  z-index: 4;
-}
-
-/* La Música — WHITE section pops toward the viewer. `translateZ` through a
-   `perspective` brings the white line-work straight out of the screen (no
-   sideways slide, so the halves don't separate), while the black layer below
-   stays flat on the surface — so only the white lifts and it reads as 3D depth,
-   not a card splitting off. A soft warm glow (which survives `screen`) gives it
-   a little lift light. */
-.half-left:hover::after,
-.half-left:focus-visible::after {
-  transform: perspective(800px) translateZ(70px);
-  filter: drop-shadow(0 0 10px rgba(255, 244, 214, 0.45));
-}
-
-/* Techné — BLACK section pops toward the viewer the same way. Raised above the
-   white layer so the lifted line-work isn't occluded, with a soft dark cast
-   shadow (which survives `multiply`) so it reads as floating above the base. */
-.half-right:hover .half-img,
-.half-right:focus-visible .half-img {
-  z-index: 3;
-  transform: perspective(800px) translateZ(70px);
-  filter: drop-shadow(3px 9px 10px rgba(0, 0, 0, 0.45));
-}
-
 .half:focus-visible {
   outline: none;
+}
+
+/* Grow the matching half out to its reference position, glowing off-white. */
+.logo-split:has(.half-left:hover) .emblem-pop--left,
+.logo-split:has(.half-left:focus-visible) .emblem-pop--left,
+.logo-split:has(.half-right:hover) .emblem-pop--right,
+.logo-split:has(.half-right:focus-visible) .emblem-pop--right {
+  opacity: 1;
+  transform: scale(1);
+  filter:
+    drop-shadow(0 0 16px rgba(255, 250, 240, 0.9))
+    drop-shadow(0 0 38px rgba(255, 246, 230, 0.6))
+    drop-shadow(0 0 72px rgba(255, 244, 220, 0.4));
+}
+
+/* Darken the backdrop a touch on hover so the glowing half stands out. */
+.logo-split:has(.half-left:hover) .logo-halo,
+.logo-split:has(.half-right:hover) .logo-halo {
+  filter: blur(2px) brightness(0.8);
 }
 
 /* ---- Side labels ---------------------------------------------- */

@@ -5,7 +5,7 @@
 .mnav {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
   transition: background 0.35s ease, box-shadow 0.35s ease, backdrop-filter 0.35s;
 }
 .mnav.is-scrolled {
@@ -21,6 +21,9 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  /* Keep the top bar (brand + burger) above the open drawer so the X can close it */
+  position: relative;
+  z-index: 3;
 }
 
 /* ---- Brand ---- */
@@ -142,14 +145,24 @@
   pointer-events: none;
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
 }
-/* hover bridge so the menu doesn't vanish in the gap */
+/* Hover bridges so the menu doesn't vanish in the gap between the label and the
+   dropdown. The dropdown is wider than its label, so we need a bridge that spans
+   the full dropdown width (::before), not just the label width (li::after). */
 .mnav__item.has-menu::after {
   content: '';
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  height: 10px;
+  height: 12px;
+}
+.mnav__dropdown::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -12px;
+  height: 14px;
 }
 .mnav__item.has-menu:hover .mnav__dropdown,
 .mnav__item.has-menu:focus-within .mnav__dropdown {
@@ -233,7 +246,7 @@
   box-shadow: -20px 0 60px -20px #000;
   transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 49;
+  z-index: 2;
   overflow-y: auto;
 }
 .mnav__drawer.is-open {
@@ -242,7 +255,7 @@
 .mnav__scrim {
   position: fixed;
   inset: 0;
-  z-index: 48;
+  z-index: 1;
   background: rgba(4, 6, 14, 0.6);
   backdrop-filter: blur(2px);
   border: none;

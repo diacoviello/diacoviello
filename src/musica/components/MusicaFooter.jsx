@@ -8,7 +8,7 @@ export default function MusicaFooter() {
         <div className="mfooter__brand">
           <span className="mfooter__mark">𝄞</span>
           <div>
-            <strong>Diablo En Música</strong>
+            <strong>David Iacoviello</strong>
             <p>Musician · Drill Designer · Educator</p>
           </div>
         </div>

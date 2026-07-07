@@ -28,3 +28,14 @@ dist-ssr
 /public/images/Landing Page.png
 /public/images/landing-page-idea.mov
 /public/images/DIABLOENMUSICA SYMBOL 2025 copy.png
+/public/images/DIABLOENMUSICA SYMBOL 2026 Left.png
+/public/images/DIABLOENMUSICA SYMBOL 2026 Right.png
+/public/images/DIABLOENMUSICA SYMBOL 2026 July.png
+/public/videos
+
+# Videos are far too large for git (GitHub caps files at 100 MB, repos ~2 GB).
+# Host show footage on YouTube/Vimeo/Cloudflare Stream and embed/link instead.
+*.mp4
+*.mov
+*.mkv
+*.webm

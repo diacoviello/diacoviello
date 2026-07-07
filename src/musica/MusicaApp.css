@@ -73,9 +73,10 @@
   }
 }
 
-/* Everything above the background */
+/* Lift content above the fixed background. NOTE: .mnav is intentionally excluded
+   — it owns a much higher z-index (see MusicaNav.css) so the sticky header and
+   its mobile drawer sit above the page content. */
 .musica-main,
-.mnav,
 .mfooter {
   position: relative;
   z-index: 1;
