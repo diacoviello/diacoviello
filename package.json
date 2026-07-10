@@ -8,9 +8,9 @@
     "build": "vite build",
     "postbuild": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -t"
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "opentype.js": "^2.0.0",
@@ -19,6 +19,7 @@
     "react-router-dom": "^7.17.0"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.44.0",
     "@eslint/js": "^10.0.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -28,6 +29,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "gh-pages": "^6.3.0",
     "globals": "^17.6.0",
-    "vite": "^8.0.12"
+    "vite": "^8.0.12",
+    "wrangler": "^4.110.0"
   }
 }
