@@ -1,16 +1,21 @@
 import Reveal from '../components/Reveal.jsx'
+import QuoteBlock from '../components/QuoteBlock.jsx'
 import './Background.css'
+
+// Paste a quote here to show it under the page title (leave empty to hide).
+const QUOTE = ''
+const QUOTE_AUTHOR = ''
 
 const CHAPTERS = [
   {
     year: 'The Beginning',
-    title: 'A pair of sticks and a metronome',
-    body: 'Music started as rhythm — tapping on everything in reach until it turned into real practice. Early ensembles taught me how individual parts lock into something bigger than any one player.',
+    title: 'A hand-me-down trumpet',
+    body: 'It began in the third grade with a hand-me-down trumpet and a hunger to learn everything I could about music. Early ensembles taught me how individual parts lock into something far bigger than any one player.',
   },
   {
     year: 'The Field',
     title: 'Finding the marching arts',
-    body: 'Marching band and the front ensemble world reframed everything. Here, music wasn’t just heard — it was seen. Visual design, drill, and choreography became as important to me as the notes themselves.',
+    body: 'Marching band reframed everything. Here, music wasn’t just heard — it was seen. Visual design, drill, and choreography became as important to me as the notes themselves.',
   },
   {
     year: 'The Craft',
@@ -19,8 +24,8 @@ const CHAPTERS = [
   },
   {
     year: 'Today',
-    title: 'Teaching the next generation',
-    body: 'Now I split my time between the stage, the design table, and the classroom — passing on the discipline, creativity, and joy that music gave me.',
+    title: 'Performing, designing, giving back',
+    body: 'Now I split my time between the stage, the design table, and the classroom — and I serve as New Jersey State Director for Taps for Veterans, honoring those who served with live Taps. It’s all one thing: passing on the discipline, creativity, and meaning that music gave me.',
   },
 ]
 
@@ -28,12 +33,14 @@ export default function Background() {
   return (
     <>
       <header className="m-pagehead">
-        <Reveal as="p" className="m-eyebrow">Background</Reveal>
-        <Reveal as="h1" delay={0.05}>How I got here</Reveal>
-        <div className="m-divider" />
-        <Reveal as="p" className="m-lead" delay={0.1}>
-          A path from curious kid with a practice pad to performer, designer, and
-          educator — told in four chapters.
+        <Reveal as="p" className="m-eyebrow">About</Reveal>
+        <QuoteBlock
+          as="h1"
+          quote={ '"Without music, life would be a mistake."' }
+          author="Nietzsche"
+        />
+        <Reveal as="p" className="m-lead" delay={ 0.1 }>
+          Performer, designer, teacher, lifelong learner.
         </Reveal>
       </header>
 

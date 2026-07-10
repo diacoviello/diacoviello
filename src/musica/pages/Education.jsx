@@ -1,4 +1,9 @@
 import Reveal from '../components/Reveal.jsx'
+import QuoteBlock from '../components/QuoteBlock.jsx'
+
+// Paste a quote here to show it under the page title (leave empty to hide).
+const QUOTE = ''
+const QUOTE_AUTHOR = ''
 
 const TIMELINE = [
   {
@@ -23,7 +28,7 @@ const CERTS = [
   {
     icon: '📜',
     title: 'Adjudication Training',
-    body: 'Certified to judge and adjudicate marching and percussion ensembles in USBands and TOB/TIA.',
+    body: 'Certified to judge and adjudicate marching band and music performance in USBands and TOB/TIA.',
   },
 ]
 
@@ -31,9 +36,12 @@ export default function Education() {
   return (
     <>
       <header className="m-pagehead">
-        <Reveal as="p" className="m-eyebrow">Education</Reveal>
-        <Reveal as="h1" delay={0.05}>Trained in theory &amp; the field</Reveal>
-        <div className="m-divider" />
+        <Reveal as="p" className="m-eyebrow">About</Reveal>
+        <QuoteBlock
+          as="h1"
+          quote={ '"Music has a power of forming the character & should therefore be introduced into the education of the young."' }
+          author="Aristotle"
+        />
         <Reveal as="p" className="m-lead" delay={0.1}>
           A foundation built in higher education and refined on the competitive
           field — formal study paired with hands-on craft.

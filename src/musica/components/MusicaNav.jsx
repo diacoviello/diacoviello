@@ -20,6 +20,7 @@ const NAV = [
       },
       { label: 'Lessons', to: '/lamusica/experience#lessons' },
       { label: 'Performances', to: '/lamusica/experience#performances' },
+      { label: 'Service', to: '/lamusica/experience#service' },
     ],
   },
   {

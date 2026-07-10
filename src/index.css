@@ -41,6 +41,7 @@
   --font-serif: 'Cormorant Garamond', 'Georgia', serif;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+  --font-script: 'Alex Brush', 'Brush Script MT', cursive;
 
   --maxw: 1120px;
   --radius: 16px;
