@@ -81,7 +81,7 @@ export default function QuoteBlock({
   }, [quote, maxLines])
 
   return (
-    <>
+    <div className="quote-block">
       {quote && (
         <Reveal ref={quoteRef} as={as} className="page-quote" delay={delay}>
           {quote}
@@ -100,6 +100,6 @@ export default function QuoteBlock({
         </Reveal>
       )}
       <div ref={dividerRef} className="m-divider" />
-    </>
+    </div>
   )
 }

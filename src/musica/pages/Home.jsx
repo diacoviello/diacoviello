@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
+import QuoteBlock from '../components/QuoteBlock.jsx'
 import './Home.css'
 
 const logo = '/images/diablo-symbol.png'
@@ -28,22 +29,12 @@ export default function Home() {
       <section className="home-hero">
         <div className="m-container home-hero__inner">
           <div className="home-hero__text">
-            <Reveal as="h1" className="home-hero__title" from="up" delay={0.15}>
-              <div style={ { fontSize: '6.5rem', letterSpacing: '0.23em' } }>
-                <i style={ { fontStyle: 'normal', fontSize: '2.3rem', verticalAlign: '55%', display: 'inline-block' } }>♬</i>
-                <span style={ { fontFamily: "'Segoe Script', cursive", fontSize: '6.5rem', fontWeight: 'bold', fontStyle: 'italic', letterSpacing: '0.03em',  display: 'inline-block' } }>Music </span>
-              </div>
-              is the<span> movement </span> <br />
-              of<span> sound </span> to 
-              <p style={ { justifyContent: 'flex-center' } }> reach 
-              the <span>  soul </span></p>
-              for the <span> education </span>
-              <br />
-              of its <span>virtue  </span><div style={ { display: 'inline', fontSize: '3.2rem', verticalAlign: '12%'  } }>♪</div>
-            </Reveal>
-            <Reveal as="p" className="home-hero__eyebrow" from="up">
-              - Plato
-            </Reveal>
+            <Reveal as="p" className="m-eyebrow">About</Reveal>
+            <QuoteBlock
+              as="h1"
+              quote={ '"Music is the movement of sound to reach the soul for the  education of its virtue"' }
+              author="Aristotle"
+            />
             <Reveal as="p" className="home-hero__lead" from="up" delay={0.16}>
               I’m David Iacoviello — a professional musician, marching-arts drill
               designer, and educator. This is where performance, pedagogy, and

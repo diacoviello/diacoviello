@@ -9,7 +9,7 @@
   width: 100%;
   max-width: var(--maxw);
   margin: 0 auto;
-  padding-inline: clamp(1.1rem, 4vw, 2rem);
+  padding-inline: clamp(1.5rem, 5vw, 3rem);
 }
 .m-section {
   padding-block: clamp(3.5rem, 8vw, 6rem);
@@ -27,7 +27,7 @@
 .m-eyebrow {
   display: inline-block;
   font-family: var(--font-sans);
-  font-size: 0.74rem;
+  font-size: .88rem;
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--accent);
@@ -88,11 +88,19 @@
      translateX() when there's a signed author, so it starts under the
      first couple letters of the name instead. */
   margin-inline: auto;
+  padding: 0 2rem 0 2rem;
 }
 
 /* Quote + attribution pair for a page header (see QuoteBlock.jsx).
    On About, the quote IS the h1 (styled by .m-pagehead h1 above); on other
    pages it renders as a secondary blockquote under the page's own h1. */
+.quote-block {
+  /* Safety margin from the container's edges — the attribution signature
+     is scaled via transform (see .page-quote-attr__mark), which bleeds
+     symmetrically from its own box and ignores normal box-model clipping,
+     so it needs real breathing room rather than sitting flush at 0. */
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
 .page-quote {
   text-wrap: balance;
 }
