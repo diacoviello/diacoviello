@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import './MusicaNav.css'
 
-const logo = '/images/diablo-symbol.png'
+const logo = '/images/diablo-symbol.svg'
 
 const NAV = [
   { label: 'Home', to: '/lamusica' },

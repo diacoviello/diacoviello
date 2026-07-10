@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import './Home.css'
 
-const logo = '/images/diablo-symbol.png'
+const logo = '/images/diablo-symbol.svg'
 
 const HIGHLIGHTS = [
   {

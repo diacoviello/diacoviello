@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { profile } from '../data.js'
 import './TechneNav.css'
 
-const logo = '/images/diablo-symbol.png'
+const logo = '/images/diablo-symbol.svg'
 
 const NAV = [
   { label: 'Home', to: '/techne' },

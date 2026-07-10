@@ -2,7 +2,7 @@ import Reveal from '../components/Reveal.jsx'
 import QuoteBlock from '../components/QuoteBlock.jsx'
 import './About.css'
 
-const logo = '/images/diablo-symbol.png'
+const logo = '/images/diablo-symbol.svg'
 
 const INSTRUMENTS = [
   'Trumpet',

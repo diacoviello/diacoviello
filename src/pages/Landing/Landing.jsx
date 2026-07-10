@@ -3,9 +3,9 @@ import LandingCanvas from './LandingCanvas.jsx'
 import './Landing.css'
 
 // Live in /public, so reference by served URL (don't import public assets).
-const base = '/images/diablo-2026-base.png'
-const leftPop = '/images/diablo-2026-left.png'
-const rightPop = '/images/diablo-2026-right.png'
+const base = '/images/diablo-symbol.svg'
+const leftPop = '/images/diablo-2026-left.webp'
+const rightPop = '/images/diablo-2026-right.webp'
 
 export default function Landing() {
   return (
