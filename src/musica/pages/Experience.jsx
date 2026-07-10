@@ -136,12 +136,15 @@ export default function Experience() {
   return (
     <>
       <header className="m-pagehead">
-        <Reveal as="p" className="m-eyebrow">Experience</Reveal>
-        <Reveal as="h1" delay={0.05}>Where am I going, Where have I been?</Reveal>
-        <QuoteBlock quote={QUOTE} author={QUOTE_AUTHOR} />
-        <Reveal as="p" className="m-lead" delay={0.1}>
-          The threads of a single career — education, design, instruction,
-          performance, and service — woven together over the years.
+        <Reveal as="p" className="m-eyebrow">About</Reveal>
+        <QuoteBlock
+          as="h1"
+          quote={'“Life is like music for its own sake. We are living in an eternal now, and when we listen to music we are not listening to the past, we are not listening to the future, we are listening to an expanded present.”' }
+          author="Alan Watts"
+        />
+        <Reveal as="p" className="m-lead" delay={ 0.1 }>
+          A foundation built in higher education and refined on the competitive
+          field — formal study paired with hands-on craft.
         </Reveal>
       </header>
 
