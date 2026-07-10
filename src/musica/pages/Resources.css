@@ -19,9 +19,11 @@
 
 .res-card__media {
   position: relative;
+  width: 100%;
   aspect-ratio: 16 / 10;
   display: grid;
   place-items: center;
+  overflow: hidden;
   background:
     radial-gradient(circle at 50% 50%, rgba(247, 223, 160, 0.14), transparent 65%),
     repeating-linear-gradient(
@@ -32,6 +34,40 @@
       rgba(255, 255, 255, 0.04) 24px
     );
   border-bottom: 1px solid var(--line-soft);
+}
+/* When the media is a real button (has a video) */
+button.res-card__media {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+/* Real YouTube thumbnail */
+.res-card__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: transform 0.4s ease;
+}
+/* Darkening scrim (over the thumbnail) so the play button + tag stay legible */
+button.res-card__media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(7, 10, 22, 0.12), rgba(7, 10, 22, 0.55));
+  transition: background 0.3s ease;
+}
+button.res-card__media:hover::before {
+  background: linear-gradient(180deg, rgba(7, 10, 22, 0.02), rgba(7, 10, 22, 0.42));
+}
+.res-card:hover .res-card__thumb {
+  transform: scale(1.06);
 }
 .res-card--cyan .res-card__media {
   background:
@@ -45,6 +81,8 @@
     );
 }
 .res-card__play {
+  position: relative;
+  z-index: 2;
   display: grid;
   place-items: center;
   width: 56px;
@@ -66,6 +104,7 @@
 }
 .res-card__tag {
   position: absolute;
+  z-index: 2;
   top: 0.8rem;
   left: 0.8rem;
   font-family: var(--font-mono);
@@ -115,4 +154,81 @@
 }
 .res-note a:hover {
   border-color: var(--gold-bright);
+}
+
+/* ---- Video lightbox (portaled to <body>) ---- */
+.res-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(4, 6, 14, 0.82);
+  backdrop-filter: blur(6px);
+  animation: res-modal-fade 0.2s ease;
+}
+@keyframes res-modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.res-modal__inner {
+  position: relative;
+  width: min(100%, 1040px);
+  animation: res-modal-pop 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes res-modal-pop {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.res-modal__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow), 0 0 70px -22px rgba(233, 189, 85, 0.55);
+}
+.res-modal__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.res-modal__close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--line-soft);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.res-modal__close:hover {
+  background: rgba(233, 189, 85, 0.22);
+  transform: scale(1.08);
+}
+.res-modal__caption {
+  margin-top: 0.9rem;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+@media (max-width: 560px) {
+  .res-modal__close {
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(4, 6, 14, 0.6);
+  }
 }

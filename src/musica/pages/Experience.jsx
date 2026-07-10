@@ -1,4 +1,9 @@
 import Reveal from '../components/Reveal.jsx'
+import QuoteBlock from '../components/QuoteBlock.jsx'
+
+// Paste a quote here to show it under the page title (leave empty to hide).
+const QUOTE = ''
+const QUOTE_AUTHOR = ''
 
 const SUBSECTIONS = [
   {
@@ -87,7 +92,7 @@ const SUBSECTIONS = [
         role: 'Clinics & Masterclasses',
         org: 'Schools & Programs around NJ',
         date: 'By invitation',
-        body: 'Guest clinics on percussion technique, marching fundamentals, and the design process behind a competitive show.',
+        body: 'Guest clinics on brass technique, marching fundamentals, and the design process behind a competitive show.',
       },
     ],
   },
@@ -111,6 +116,20 @@ const SUBSECTIONS = [
       },
     ],
   },
+  {
+    id: 'service',
+    num: '05',
+    title: 'Service',
+    lead: 'Giving back — honoring those who served.',
+    items: [
+      {
+        role: 'NJ State Director — Taps for Veterans',
+        org: 'Taps for Veterans · non-profit',
+        date: 'Present',
+        body: 'Lead the New Jersey chapter of a non-profit that provides live buglers, free of charge, to perform Taps at military funerals and events — so every veteran is honored with a real, live performance rather than a recording.',
+      },
+    ],
+  },
 ]
 
 export default function Experience() {
@@ -118,11 +137,11 @@ export default function Experience() {
     <>
       <header className="m-pagehead">
         <Reveal as="p" className="m-eyebrow">Experience</Reveal>
-        <Reveal as="h1" delay={0.05}>Where the work happens</Reveal>
-        <div className="m-divider" />
+        <Reveal as="h1" delay={0.05}>Where am I going, Where have I been?</Reveal>
+        <QuoteBlock quote={QUOTE} author={QUOTE_AUTHOR} />
         <Reveal as="p" className="m-lead" delay={0.1}>
-          Four threads of a single career — education, design, instruction, and
-          performance — woven together over the years.
+          The threads of a single career — education, design, instruction,
+          performance, and service — woven together over the years.
         </Reveal>
       </header>
 

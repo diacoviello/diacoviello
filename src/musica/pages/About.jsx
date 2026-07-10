@@ -1,4 +1,5 @@
 import Reveal from '../components/Reveal.jsx'
+import QuoteBlock from '../components/QuoteBlock.jsx'
 import './About.css'
 
 const logo = '/images/diablo-symbol.png'
@@ -25,11 +26,13 @@ export default function About() {
     <>
       <header className="m-pagehead">
         <Reveal as="p" className="m-eyebrow">About</Reveal>
-        <Reveal as="h1" delay={0.05}>The story behind the sound</Reveal>
-        <div className="m-divider" />
+        <QuoteBlock
+          as="h1"
+          quote={'"Music has a power of forming the character & should therefore be introduced into the education of the young."'}
+          author="Aristotle"
+        />
         <Reveal as="p" className="m-lead" delay={0.1}>
-          Equal parts performer, designer, and teacher — driven by the belief
-          that great music and great visual storytelling come from the same place.
+          Performer, designer, teacher, lifelong learner.
         </Reveal>
       </header>
 
@@ -63,6 +66,14 @@ export default function About() {
                 I balance my musical education with a variety of knowledge obtained from personal educational endeavors that has made my approach to education
                 one that operates within a 'cross-curricular' framework. I believe that music is a universal language that can be used to connect people from all walks of life,
                 and I strive to create meaningful experiences for my students and audiences alike.
+              </p>
+              <p>
+                Away from the stage and the field, I serve as the New Jersey State
+                Director for <strong>Taps for Veterans</strong>, a non-profit that
+                provides live buglers — free of charge — to perform Taps at military
+                funerals and events. We’re pushing back against the spread of digital
+                recordings, because those who served our country deserve a real, live
+                performance in their honor — not a recording.
               </p>
 
               <div className="about-tags">

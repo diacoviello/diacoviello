@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 
 /**
  * Reveals children with a fade/slide once they scroll into view.
@@ -6,19 +6,15 @@ import { useEffect, useRef, useState } from 'react'
  * @param {('up'|'left'|'right'|'zoom')} from  direction the element travels from
  * @param {number} delay  seconds to stagger the reveal
  */
-export default function Reveal({
-  children,
-  from = 'up',
-  delay = 0,
-  as: Tag = 'div',
-  className = '',
-  ...rest
-}) {
-  const ref = useRef(null)
+const Reveal = forwardRef(function Reveal(
+  { children, from = 'up', delay = 0, as: Tag = 'div', className = '', ...rest },
+  forwardedRef,
+) {
+  const innerRef = useRef(null)
   const [shown, setShown] = useState(false)
 
   useEffect(() => {
-    const el = ref.current
+    const el = innerRef.current
     if (!el) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       setShown(true)
@@ -39,9 +35,15 @@ export default function Reveal({
     return () => obs.disconnect()
   }, [])
 
+  const setRefs = (node) => {
+    innerRef.current = node
+    if (typeof forwardedRef === 'function') forwardedRef(node)
+    else if (forwardedRef) forwardedRef.current = node
+  }
+
   return (
     <Tag
-      ref={ref}
+      ref={setRefs}
       className={`reveal reveal--${from} ${shown ? 'is-shown' : ''} ${className}`}
       style={{ transitionDelay: `${delay}s` }}
       {...rest}
@@ -49,4 +51,6 @@ export default function Reveal({
       {children}
     </Tag>
   )
-}
+})
+
+export default Reveal

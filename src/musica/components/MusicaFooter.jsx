@@ -22,7 +22,7 @@ export default function MusicaFooter() {
         </nav>
 
         <div className="mfooter__contact">
-          <a href="mailto:diacovmusic@gmail.com">diacovmusic@gmail.com</a>
+          <a href="mailto:iacoviello.david@gmail.com">iacoviello.david@gmail.com</a>
           <Link to="/" className="mfooter__home">
             ← Back to landing
           </Link>

@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import Reveal from '../components/Reveal.jsx'
+import QuoteBlock from '../components/QuoteBlock.jsx'
 import './Resources.css'
+
+// Paste a quote here to show it under the page title (leave empty to hide).
+const QUOTE = ''
+const QUOTE_AUTHOR = ''
 
 const DRILL = [
   {
@@ -114,7 +119,7 @@ export default function Resources() {
       <header className="m-pagehead">
         <Reveal as="p" className="m-eyebrow">Resources</Reveal>
         <Reveal as="h1" delay={0.05}>Selected work &amp; media</Reveal>
-        <div className="m-divider" />
+        <QuoteBlock quote={QUOTE} author={QUOTE_AUTHOR} />
         <Reveal as="p" className="m-lead" delay={0.1}>
           Full-show videos and drill design work from the marching ensembles I&rsquo;ve
           written for. Click any card to watch.
@@ -166,7 +171,7 @@ export default function Resources() {
           <Reveal className="res-note">
             <p>
               Want drill design for your ensemble, or a custom arrangement?{' '}
-              <a href="mailto:diacovmusic@gmail.com">Get in touch →</a>
+              <a href="mailto:iacoviello.david@gmail.com">Get in touch →</a>
             </p>
           </Reveal>
         </div>

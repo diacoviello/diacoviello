@@ -77,14 +77,82 @@
   margin-bottom: 0.7rem;
 }
 .m-divider {
-  width: 64px;
-  height: 3px;
-  border-radius: 3px;
+  width: 42%;
+  height: 4px;
+  border-radius: 4.2px;
   background: linear-gradient(90deg, var(--accent), transparent);
-  margin: 1rem 0 2rem;
+  margin: 1rem 0 0rem;
 }
 .m-pagehead .m-divider {
+  /* Centered by default; QuoteBlock.jsx nudges this via an inline
+     translateX() when there's a signed author, so it starts under the
+     first couple letters of the name instead. */
   margin-inline: auto;
+}
+
+/* Quote + attribution pair for a page header (see QuoteBlock.jsx).
+   On About, the quote IS the h1 (styled by .m-pagehead h1 above); on other
+   pages it renders as a secondary blockquote under the page's own h1. */
+.page-quote {
+  text-wrap: balance;
+}
+blockquote.page-quote,
+p.page-quote {
+  display: block;
+  margin: 1.4rem auto 0;
+  max-width: 680px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
+  font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+  background: linear-gradient(
+    120deg,
+    #fff 0%,
+    var(--accent-bright) 55%,
+    var(--accent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent-bright);
+}
+
+.page-quote-attr {
+  /* Layout/reveal-animation only — Reveal's .is-shown rule resets `transform`
+     on this element, so the scaleY() stretch lives on .page-quote-attr__mark
+     (the inner span) instead, where nothing else touches `transform`. */
+  margin-top: 1.1rem;
+  padding-block: 0.15rem;
+}
+.page-quote-attr__mark {
+  display: inline-flex;
+  align-items: baseline;
+  transform: scale(2.0, 1.8);
+  transform-origin: center;
+  padding-block: 1.2rem;
+  font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+}
+.page-quote-attr__dash {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  background: linear-gradient(
+    120deg,
+    #fff 0%,
+    var(--accent-bright) 55%,
+    var(--accent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent-bright);
+}
+/* The traced-name SVG (see SignatureTrace.jsx) supplies its own gradient
+   fill/stroke directly, since background-clip:text doesn't apply to SVG. */
+.page-quote-attr__signature {
+  display: inline-block;
+  line-height: 0;
 }
 
 /* ---- Buttons ---- */
