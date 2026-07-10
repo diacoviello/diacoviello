@@ -33,12 +33,14 @@ export default function Background() {
   return (
     <>
       <header className="m-pagehead">
-        <Reveal as="p" className="m-eyebrow">Background</Reveal>
-        <Reveal as="h1" delay={0.05}>How I got here</Reveal>
-        <QuoteBlock quote={QUOTE} author={QUOTE_AUTHOR} />
-        <Reveal as="p" className="m-lead" delay={0.1}>
-          A path from a curious kid with a hand-me-down trumpet to performer,
-          designer, and educator — told in four chapters.
+        <Reveal as="p" className="m-eyebrow">About</Reveal>
+        <QuoteBlock
+          as="h1"
+          quote={ '"Without music, life would be a mistake."' }
+          author="Nietzsche"
+        />
+        <Reveal as="p" className="m-lead" delay={ 0.1 }>
+          Performer, designer, teacher, lifelong learner.
         </Reveal>
       </header>
 

@@ -28,8 +28,8 @@ export default function About() {
         <Reveal as="p" className="m-eyebrow">About</Reveal>
         <QuoteBlock
           as="h1"
-          quote={'"Music has a power of forming the character & should therefore be introduced into the education of the young."'}
-          author="Aristotle"
+          quote={'"Without music to decorate it, time is just a bunch of boring production deadlines or dates by which bills must be paid."'}
+          author="Frank Zappa"
         />
         <Reveal as="p" className="m-lead" delay={0.1}>
           Performer, designer, teacher, lifelong learner.

@@ -36,9 +36,12 @@ export default function Education() {
   return (
     <>
       <header className="m-pagehead">
-        <Reveal as="p" className="m-eyebrow">Education</Reveal>
-        <Reveal as="h1" delay={0.05}>Trained in theory &amp; the field</Reveal>
-        <QuoteBlock quote={QUOTE} author={QUOTE_AUTHOR} />
+        <Reveal as="p" className="m-eyebrow">About</Reveal>
+        <QuoteBlock
+          as="h1"
+          quote={ '"Music has a power of forming the character & should therefore be introduced into the education of the young."' }
+          author="Aristotle"
+        />
         <Reveal as="p" className="m-lead" delay={0.1}>
           A foundation built in higher education and refined on the competitive
           field — formal study paired with hands-on craft.
