@@ -5,7 +5,7 @@ import SocialIcons from '../components/SocialIcons.jsx'
 import { profile, social, projects } from '../data.js'
 import './Home.css'
 
-const logo = '/images/diablo-symbol.svg'
+const logo = '/images/diablo-symbol.png'
 
 export default function Home() {
   return (
