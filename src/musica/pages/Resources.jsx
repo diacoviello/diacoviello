@@ -117,12 +117,14 @@ export default function Resources() {
   return (
     <>
       <header className="m-pagehead">
-        <Reveal as="p" className="m-eyebrow">Resources</Reveal>
-        <Reveal as="h1" delay={0.05}>Selected work &amp; media</Reveal>
-        <QuoteBlock quote={QUOTE} author={QUOTE_AUTHOR} />
-        <Reveal as="p" className="m-lead" delay={0.1}>
-          Full-show videos and drill design work from the marching ensembles I&rsquo;ve
-          written for. Click any card to watch.
+        <Reveal as="p" className="m-eyebrow">About</Reveal>
+        <QuoteBlock
+          as="h1"
+          quote={ '“Music in the soul can be heard by the universe.”' }
+          author="Lao Tzu"
+        />
+        <Reveal as="p" className="m-lead" delay={ 0.1 }>
+          Performer, designer, teacher, lifelong learner.
         </Reveal>
       </header>
 
