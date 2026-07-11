@@ -1,13 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Reveal from './Reveal.jsx'
 import SignatureTrace from './SignatureTrace.jsx'
 
 const MIN_QUOTE_FONT_PX = 15
-// How far left of the signature's own left edge the divider should start,
-// as a fraction of the signature's rendered width. Negative = starts before
-// the signature (out toward the "— " dash); tuned by eye against the About
-// page's "Aristotle" signature.
-const DIVIDER_ANCHOR_FRACTION = -0.365
 
 /**
  * Quote + attribution pair for a page's <header className="m-pagehead">.
@@ -15,9 +10,16 @@ const DIVIDER_ANCHOR_FRACTION = -0.365
  * musica/pages/About.jsx); otherwise it renders as a secondary blockquote
  * under the page's existing h1 title.
  *
- * Also owns the divider that follows: centered by default, or nudged left
- * (via SignatureTrace's `onGeometry` callback + DIVIDER_ANCHOR_FRACTION
- * above) to sit near the start of the signed name when there's an author.
+ * Also owns the divider that follows: it's centered (via plain CSS,
+ * margin-inline: auto) within .quote-block, which is itself either
+ * full-width (the centered .m-pagehead subpages — so the divider ends up
+ * centered on the page) or scoped to a narrower column (Home's left-aligned
+ * hero — so the divider ends up centered under the quote/signature there).
+ * An earlier version tried to anchor the divider under the first couple
+ * letters of the signature via JS + a tuned offset, but that offset was
+ * fit to one specific name/layout and broke down for other author names and
+ * for Home's narrower column (drifting off-position, even clipping off the
+ * left edge) — plain centering is simpler and works everywhere.
  *
  * Renders just the divider when `quote` is empty, so a page can have this
  * wired up ahead of time — just paste `quote`/`author` in later.
@@ -31,24 +33,6 @@ export default function QuoteBlock({
   authorDelay = 0.08,
 }) {
   const quoteRef = useRef(null)
-  const dividerRef = useRef(null)
-  const [anchorX, setAnchorX] = useState(null)
-
-  const handleSignatureGeometry = useCallback(({ left, width }) => {
-    setAnchorX(left + DIVIDER_ANCHOR_FRACTION * width)
-  }, [])
-
-  useEffect(() => {
-    const divider = dividerRef.current
-    if (!divider) return
-    if (anchorX == null) {
-      divider.style.transform = ''
-      return
-    }
-    divider.style.transform = ''
-    const delta = anchorX - divider.getBoundingClientRect().left
-    divider.style.transform = `translateX(${delta}px)`
-  }, [anchorX])
 
   useEffect(() => {
     const el = quoteRef.current
@@ -91,15 +75,11 @@ export default function QuoteBlock({
         <Reveal as="p" className="page-quote-attr" from="up" delay={authorDelay}>
           <span className="page-quote-attr__mark">
             <span className="page-quote-attr__dash">— </span>
-            <SignatureTrace
-              text={author}
-              className="page-quote-attr__signature"
-              onGeometry={handleSignatureGeometry}
-            />
+            <SignatureTrace text={author} className="page-quote-attr__signature" />
           </span>
         </Reveal>
       )}
-      <div ref={dividerRef} className="m-divider" />
+      <div className="m-divider" />
     </div>
   )
 }

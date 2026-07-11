@@ -38,7 +38,7 @@ function loadSignatureFont() {
  * user prefers reduced motion (in which case it renders fully drawn/filled
  * immediately, no animation).
  */
-export default function SignatureTrace({ text, className = '', onGeometry }) {
+export default function SignatureTrace({ text, className = '' }) {
   const rawId = useId().replace(/[^a-zA-Z0-9]/g, '')
   const gradientId = `sig-grad-${rawId}`
   const containerRef = useRef(null)
@@ -85,21 +85,6 @@ export default function SignatureTrace({ text, className = '', onGeometry }) {
       cancelled = true
     }
   }, [text])
-
-  useEffect(() => {
-    if (!glyphData || !onGeometry) return
-    const el = containerRef.current
-    if (!el) return
-
-    const reportGeometry = () => {
-      const rect = el.getBoundingClientRect()
-      onGeometry({ left: rect.left, width: rect.width })
-    }
-
-    reportGeometry()
-    window.addEventListener('resize', reportGeometry)
-    return () => window.removeEventListener('resize', reportGeometry)
-  }, [glyphData, onGeometry])
 
   useEffect(() => {
     const el = containerRef.current

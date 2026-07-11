@@ -83,12 +83,14 @@
   background: linear-gradient(90deg, var(--accent), transparent);
   margin: 1rem 0 0rem;
 }
-.m-pagehead .m-divider {
-  /* Centered by default; QuoteBlock.jsx nudges this via an inline
-     translateX() when there's a signed author, so it starts under the
-     first couple letters of the name instead. */
+/* Centers the QuoteBlock divider within .quote-block — which is full-width
+   on the centered .m-pagehead subpages (so this centers it on the page) and
+   scoped to the narrower left column on Home's hero (so this centers it
+   under the quote/signature there instead). Scoped to .quote-block rather
+   than .m-pagehead so both contexts share one rule; other standalone
+   .m-divider uses elsewhere (e.g. section dividers) are unaffected. */
+.quote-block .m-divider {
   margin-inline: auto;
-  padding: 0 2rem 0 2rem;
 }
 
 /* Quote + attribution pair for a page header (see QuoteBlock.jsx).
