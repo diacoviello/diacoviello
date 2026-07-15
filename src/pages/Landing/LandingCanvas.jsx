@@ -13,8 +13,12 @@ const pick = (arr) => arr[(Math.random() * arr.length) | 0]
  * Full-viewport canvas behind the landing logo. Wavy "strings" of music
  * notation (gold, left) and code (cyan, right) fade in and orbit / converge
  * around the page center, echoing the brand mockup.
+ *
+ * `logoRef` points at the emblem element so glyphs can orbit its real
+ * center and bounce off its real rendered radius (which grows as the
+ * logo's own intro animation scales in), rather than a fixed guess.
  */
-export default function LandingCanvas() {
+export default function LandingCanvas({ logoRef }) {
   const canvasRef = useRef(null)
 
   useEffect(() => {
@@ -125,6 +129,21 @@ export default function LandingCanvas() {
         drawWave(wv, intro)
       }
 
+      // Orbit origin + no-fly radius, taken from the emblem's real, live
+      // rect (tracks its own zoom-in intro) instead of a fixed guess —
+      // this is what makes the bounce below land on the actual artwork.
+      let originX = cx
+      let originY = cy
+      let innerBound = 130
+      const logoEl = logoRef && logoRef.current
+      if (logoEl) {
+        const logoRect = logoEl.getBoundingClientRect()
+        const canvasRect = canvas.getBoundingClientRect()
+        originX = logoRect.left + logoRect.width / 2 - canvasRect.left
+        originY = logoRect.top + logoRect.height / 2 - canvasRect.top
+        innerBound = Math.min(logoRect.width, logoRect.height) / 2 + 10
+      }
+
       // Orbiting glyph "strings"
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
@@ -146,10 +165,12 @@ export default function LandingCanvas() {
         const breath = reduce
           ? 0
           : Math.sin(tSec * pt.breathSpeed + pt.breathPhase) * pt.breathAmp
-        const radius = pt.baseR * (1 + (1 - ease) * 0.7) + breath
+        let radius = pt.baseR * (1 + (1 - ease) * 0.7) + breath
+        // Reflect back out instead of drifting under the emblem's art.
+        if (radius < innerBound) radius = innerBound + (innerBound - radius)
 
-        const x = cx + Math.cos(pt.angle) * radius
-        const y = cy + Math.sin(pt.angle) * radius
+        const x = originX + Math.cos(pt.angle) * radius
+        const y = originY + Math.sin(pt.angle) * radius
 
         const alpha = pt.base * ease
         ctx.save()

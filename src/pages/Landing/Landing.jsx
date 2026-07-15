@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useRef } from 'react'
 import LandingCanvas from './LandingCanvas.jsx'
 import './Landing.css'
 
@@ -8,15 +9,17 @@ const leftPop = '/images/diablo-2026-left.png'
 const rightPop = '/images/diablo-2026-right.png'
 
 export default function Landing() {
+  const logoRef = useRef(null)
+
   return (
     <div className="landing">
-      <LandingCanvas />
+      <LandingCanvas logoRef={logoRef} />
       <div className="landing-vignette" aria-hidden="true" />
 
       <main className="landing-stage">
-        <p className="landing-eyebrow">David&nbsp;Iacoviello</p>
+        <p className="landing-eyebrow">David Iacoviello</p>
 
-        <div className="logo-split">
+        <div className="logo-split" ref={logoRef}>
           <span className="logo-halo" aria-hidden="true" />
 
           {/* Full emblem underneath, always visible */}
@@ -62,7 +65,11 @@ export default function Landing() {
           </span>
         </div>
 
-        <p className="landing-hint">&lt;- Music   or    Development -&gt;</p>
+        <div className="landing-hint">
+          <span className="landing-hint__side landing-hint__side--left">< span style={{ fontSize: "2.3rem" }}>←</span> Music</span>
+          <span className="landing-hint__divider" style={{ fontSize: "2.3rem", transform: "scaleX(230%)", fontWeight: "900" }}>↔</span>
+          <span className="landing-hint__side landing-hint__side--right">Development<span style={{  }}>→</span></span>
+        </div>
       </main>
     </div>
   )
