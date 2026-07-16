@@ -65,11 +65,24 @@ export default function Landing() {
           </span>
         </div>
 
-        <div className="landing-hint">
-          <span className="landing-hint__side landing-hint__side--left">< span style={{ fontSize: "2.3rem" }}>←</span> Music</span>
-          <span className="landing-hint__divider" style={{ fontSize: "2.3rem", transform: "scaleX(230%)", fontWeight: "900" }}>↔</span>
-          <span className="landing-hint__side landing-hint__side--right">Development<span style={{  }}>→</span></span>
-        </div>
+        <container className="landing-hint">
+          <span
+            className="landing-hint__side landing-hint__side--left">
+            < span style={ { fontSize: "2.3rem" } }>
+              ←
+            </span> Music</span>
+          <span className="landing-hint__divider"
+            style={ { fontSize: "2.3rem", transform: "scaleX(130%)", fontWeight: "300" } }>
+            ←♫♬ ()=&gt;
+          </span>
+          <span
+            className="landing-hint__side landing-hint__side--right">
+            Development
+            <span style={ {} }>
+              →
+            </span>
+          </span>
+        </container>
       </main>
     </div>
   )
