@@ -2,6 +2,16 @@
    Landing page — swirling intro + clickable yin/yang logo
    ============================================================ */
 
+@font-face {
+  font-family: 'Apple II';
+  src: url('/fonts/apple-ii.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'RealBook';
+  src: url('/fonts/realbook-webfont.ttf') format('truetype');
+}
+
 .landing {
   position: relative;
   height: 100vh;
@@ -69,26 +79,34 @@
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   align-self: normal;
-  column-gap: 2.3em;
+  column-gap: clamp(1.5em, 8vw, 4em);
   font-size: clamp(0.75rem, 3vmin, 1.5rem);
-  letter-spacing: 0.34em;
+  /* letter-spacing: 0.34em; */
   text-transform: uppercase;
   color: var(--ink-dim);
   opacity: 0;
   animation: fade-up 1.4s ease forwards 2.4s;
 }
 .landing-hint__side--left {
-  justify-self: end;
+  font-family: 'RealBook';
+  font-style: italic;
+  justify-self: right;
   white-space: nowrap;
+  letter-spacing: 0.04em;
+  font-size: 2.3rem;
   grid-column: 1;
 }
 .landing-hint__side--right {
+  font-family: var(--font-code);
   justify-self: start;
   white-space: nowrap;
   grid-column: 3;
+  letter-spacing: 0.1em;
+  padding-right: 0.1em;
 }
 .landing-hint__divider {
   justify-self: center;
+  font-family: 'JetBrains Mono', monospace;
   align-content: center;
   grid-column: 2 / span 1;
 }
@@ -278,6 +296,22 @@
 
 /* On small screens, labels sit under the emblem so they never clip off-screen */
 @media (max-width: 640px) {
+  .landing-hint {
+    column-gap: clamp(0.5em, 2vw, 1em);
+    font-size: clamp(0.6rem, 2vmin, 1rem);
+  }
+  .landing-hint__side--left {
+    column-gap: clamp(0.5em, 2vw, 1em);
+    font-size: clamp(1rem, 4vmin, 2rem);
+  }
+  .landing-hint__side--right {
+    column-gap: clamp(0.5em, 2vw, 1em);
+    font-size: clamp(1rem, 4vmin, 1.5rem);
+  }
+  .landing-hint__divider {
+    column-gap: clamp(0.5em, 2vw, 1em);
+    font-size: clamp(1rem, 4vmin, 1.5rem);
+  }
   .side-label {
     top: auto;
     bottom: -3.4rem;

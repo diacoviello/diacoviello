@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 /* Glyph pools — music notation (gold) vs. code tokens (cyan/green) */
-const NOTES = ['♪', '♫', '♩', '♬', '𝄞', '♭', '♯', '𝄢', '𝄪', '𝅘𝅥𝅮']
+const NOTES=[ '♪', '♫', '♩', '♬', '𝄞', '♭', '♯', '𝄢', '𝄪', '𝄫']
 const CODE = [
   '{ }', '</>', '=>', '( )', '[ ]', '&&', '||', '::', '!=', '++',
   '01', '10', 'fn', 'const', '#', ';', '/*', '*/', '<div>', '()=>',

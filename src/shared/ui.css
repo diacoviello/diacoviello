@@ -144,7 +144,7 @@ p.page-quote {
   font-size: clamp(1.5rem, 3.2vw, 2.15rem);
 }
 .page-quote-attr__dash {
-  font-family: var(--font-script);
+    font-family: var(--font-script);
   font-weight: 400;
   letter-spacing: 0.03em;
   background: linear-gradient(

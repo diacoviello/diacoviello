@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
+import '/src/index.css'
 import LandingCanvas from './LandingCanvas.jsx'
 import './Landing.css'
 
 // Live in /public, so reference by served URL (don't import public assets).
 const base = '/images/diablo-2026-base.png'
 const leftPop = '/images/diablo-2026-left.png'
-const rightPop = '/images/diablo-2026-right.png'
+const rightPop='/images/diablo-2026-right.png'
 
 export default function Landing() {
   const logoRef = useRef(null)
@@ -65,24 +66,20 @@ export default function Landing() {
           </span>
         </div>
 
-        <container className="landing-hint">
+        <div className="landing-hint">
           <span
             className="landing-hint__side landing-hint__side--left">
-            < span style={ { fontSize: "2.3rem" } }>
-              ←
-            </span> Music</span>
+            ♫ Music ♬&nbsp;𝄇</span>
           <span className="landing-hint__divider"
-            style={ { fontSize: "2.3rem", transform: "scaleX(130%)", fontWeight: "300" } }>
-            ←♫♬ ()=&gt;
+            style={ { transform: "scaleX(200%)", fontWeight: "108", fontSize: "clamp(1rem, 4vmin, 2rem)" } }>
+            ⟺
           </span>
           <span
-            className="landing-hint__side landing-hint__side--right">
-            Development
-            <span style={ {} }>
-              →
-            </span>
+            className="landing-hint__side landing-hint__side--right"
+            style={ { fontFamily: "'Apple II'", fontSize: "clamp(1rem, 4vmin, 2rem)" } }>
+            ()=&gt;&nbsp;[ Dev ]
           </span>
-        </container>
+        </div>
       </main>
     </div>
   )
