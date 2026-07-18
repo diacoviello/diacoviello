@@ -1,15 +1,44 @@
 import { useEffect, useRef } from 'react'
 
 /* Glyph pools — music notation (gold) vs. code tokens (cyan/green) */
-const NOTES=[
-  '𝅘𝅥𝅮', '♫', '♩', '♬', '𝄞', '♭', '♯', '𝄢', '𝄪', '𝄫', '♮', '𝄇', '𝄐', '𝄡', '𝆒',
-  '𝄵', '𝄿', '𝄽', '𝄾', '𝄴', '𝅘𝅥𝅯', '𝅘𝅥', '𝅗𝅥', '𝆑', '𝆏', '𝆗', '𝄌', '𝄋', '𝄎', '🎼'
+const NOTES = [
+  '\uE050',  // treble
+  '\uE05C',  // C clef
+  '\uE1D8',  // eighth note down
+  '\uE1DA',  // sixteenth note down
+  '\uE260',  // flat
+  '\uE261',  // natural
+  '\uE062',  // sharp
+  '\uE263',  // dub sharp
+  '\uE264',  // dub flat
+  '\uE047',  // sign
+  '\uE048',  // Code
+  '\uE1D3',  // half note
+  '\uE1DB',  // single 32nd
+  '\uE08B',  // cut time
+  '\uE1D5',  // quarter note
+  '\uE1D3',  // half note
+  '\uE4C0',  // fermata
+  '\uE4D1',  // cut
+  '\uE4E5',  // quarter rest
+  '\uE4E7',  // 16th rest
+  '\uE4E6',  // 8th rest
+  '\uE500',  // vamp
+  '\uE52B',  // pp
+  '\uE52F',  // ff
+  '\uE52D',  // mf
+  '\uE52C', // mp
+  '\uE534',  // fp
+  '\uE539',  // sfz
+  '\uECA7',  // 8th note
+  '\uF67B',  // 15ma
+  '\uF677',  // 8va
 ]
 const CODE = [
-  '{ }', '</>', '=>', '( )', '[ ]', '&&', '||', '::', '!=', '++',
-  '01', '10', 'fn', 'const', '#', ';', '/*', '*/', '<div>', '()=>',
+  '{ }', '</>', '=>', '( )', '[ ]', '&&', '||', '::', '!=', '++', '==',
+  'fn', 'const', '#', ';', '/*', '*/', '<div>', '()=>', 'SELECT','FROM',
   '+', '-', '*', '/', '=', '<', '>', '&', '|', '!', '%', '^', '~', 'var',
-  'let', 'if', 'else', 'return', 'import', 'export', 'class'
+  'let', 'if', 'else', 'return', 'import', 'export', 'class', 'OR', '.sql'
 ]
 
 const pick = (arr) => arr[(Math.random() * arr.length) | 0]
@@ -75,7 +104,7 @@ export default function LandingCanvas({ logoRef }) {
             (0.6 + baseR / 360),
           spin: Math.random() * Math.PI * 2,
           spinSpeed: (Math.random() - 0.5) * 0.012,
-          size: 13 + Math.random() * 20,
+          size: isMusic ? 18 + Math.random() * 23 : 10 + Math.random() * 16,
           glyph: isMusic ? pick(NOTES) : pick(CODE),
           breathPhase: Math.random() * Math.PI * 2,
           breathAmp: 8 + Math.random() * 34,
@@ -182,7 +211,7 @@ export default function LandingCanvas({ logoRef }) {
         ctx.translate(x, y)
         ctx.rotate(pt.angle + Math.PI / 2 + pt.spin * 0.15)
         ctx.font = `${pt.size}px ${
-          pt.isMusic ? "'Cormorant Garamond', serif" : "'JetBrains Mono', monospace"
+          pt.isMusic? "'FinaleEngraver', serif": "'Apple II', opentype"
         }`
         const color = pt.isMusic ? '233,189,85' : '79,211,196'
         ctx.shadowColor = `rgba(${color},${alpha})`
@@ -222,3 +251,4 @@ export default function LandingCanvas({ logoRef }) {
 
   return <canvas ref={canvasRef} className="landing-canvas" aria-hidden="true" />
 }
+

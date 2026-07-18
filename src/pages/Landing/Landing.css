@@ -12,6 +12,21 @@
   src: url('/fonts/realbook-webfont.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'FinaleMaestro';
+  src: url('/fonts/FinaleMaestro.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'FinaleEngraver';
+  src: url('/fonts/FinaleEngraver.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'FinaleJazz';
+  src: url('/fonts/FinaleJazz.otf') format('opentype');
+}
+
 .landing {
   position: relative;
   height: 100vh;
@@ -88,26 +103,38 @@
   animation: fade-up 1.4s ease forwards 2.4s;
 }
 .landing-hint__side--left {
+  /* border:#070a16 4px solid; */
   font-family: 'RealBook';
   font-style: italic;
-  justify-self: right;
-  white-space: nowrap;
+  justify-self: center;
   letter-spacing: 0.04em;
-  font-size: 2.3rem;
   grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: normal;
+  max-width: 100%;
 }
 .landing-hint__side--right {
+  /* border: #070a16 4px solid; */
   font-family: var(--font-code);
-  justify-self: start;
-  white-space: nowrap;
+  justify-self: center;
   grid-column: 3;
   letter-spacing: 0.1em;
   padding-right: 0.1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  white-space: normal;
+  max-width: 100%;
 }
 .landing-hint__divider {
+  /* border:#070a16 4px solid; */
   justify-self: center;
   font-family: 'JetBrains Mono', monospace;
   align-content: center;
+  line-height: 2;
+  vertical-align: top;
   grid-column: 2 / span 1;
 }
 
@@ -205,11 +232,61 @@
     drop-shadow(0 0 72px rgba(255, 244, 220, 0.4));
 }
 
-/* Darken the backdrop a touch on hover so the glowing half stands out. */
-.logo-split:has(.half-left:hover) .logo-halo,
-.logo-split:has(.half-right:hover) .logo-halo {
-  filter: blur(2px) brightness(0.8);
+/* Reveal the matching label on hover/focus of each half */
+.logo-split:has(.half-left:hover) .side-label--left,
+.logo-split:has(.half-left:focus-visible) .side-label--left,
+.logo-split:has(.half-right:hover) .side-label--right,
+.logo-split:has(.half-right:focus-visible) .side-label--right {
+  opacity: 1;
+  transform: translate(0, -50%);
+  z-index: 10;
 }
+
+/* Highlight landing-hint text on logo hover */
+.landing-hint__side--left,
+.landing-hint__side--right {
+  color: var(--ink-dim);
+  transition: color 0.3s ease, font-size 0.3s ease, filter 0.3s ease;
+}
+
+.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left,
+.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left {
+  color: var(--gold-bright);
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-weight: 600;
+  filter: drop-shadow(0 0 12px rgba(233, 189, 85, 0.5));
+}
+
+.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left::after,
+.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left::after {
+  content: 'Musician · Educator · Drill Designer';
+  display: block;
+  font-size: clamp(0.65rem, 1.8vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-top: 0.35rem;
+  opacity: 1;
+}
+
+.logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__side--right,
+.logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__side--right {
+  color: var(--cyan-bright);
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-weight: 600;
+  filter: drop-shadow(0 0 12px rgba(79, 211, 196, 0.5));
+}
+
+.logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__side--right::after,
+.logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__side--right::after {
+  content: 'Software Engineer · Full-Stack Developer';
+  display: block;
+  font-size: clamp(0.65rem, 1.8vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  margin-top: 0.35rem;
+  opacity: 1;
+}
+
 
 /* ---- Side labels ---------------------------------------------- */
 
@@ -223,6 +300,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.45s ease, transform 0.45s ease;
+  max-width: 150px;
 }
 
 .side-label--left {
@@ -241,39 +319,39 @@
 }
 
 .side-label__title {
-  font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 4.4vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1;
+  display: none;
 }
-.side-label--left .side-label__title {
-  color: var(--gold-bright);
-  text-shadow: 0 0 22px rgba(233, 189, 85, 0.5);
-}
-.side-label--right .side-label__title {
-  color: var(--cyan-bright);
-  text-shadow: 0 0 22px rgba(79, 211, 196, 0.5);
-}
+
 
 .side-label__sub {
   font-family: var(--font-sans);
-  font-size: clamp(0.62rem, 1.5vw, 0.78rem);
-  letter-spacing: 0.22em;
+  font-size: clamp(0.85rem, 2vw, 1.2rem);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--gold-bright);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  filter: drop-shadow(0 0 12px rgba(233, 189, 85, 0.5));
+  display: block;
+  white-space: pre;
+  line-height: 1.3;
 }
 
-/* Reveal the matching label on hover/focus of each half */
-.half-left:hover ~ .side-label--left,
-.half-left:focus-visible ~ .side-label--left {
-  opacity: 1;
-  transform: translate(0, -50%);
+.side-label--right .side-label__sub {
+  color: var(--cyan-bright);
+  filter: drop-shadow(0 0 12px rgba(79, 211, 196, 0.5));
 }
-.half-right:hover ~ .side-label--right,
-.half-right:focus-visible ~ .side-label--right {
+
+/* Show subtitle on hover */
+.logo-split:has(.half-left:hover) .side-label--left .side-label__sub,
+.logo-split:has(.half-left:focus-visible) .side-label--left .side-label__sub,
+.logo-split:has(.half-right:hover) .side-label--right .side-label__sub,
+.logo-split:has(.half-right:focus-visible) .side-label--right .side-label__sub {
   opacity: 1;
-  transform: translate(0, -50%);
 }
+
 
 /* Short / landscape viewports (rotated phones, small laptop windows) — shrink
    everything further so the whole stack always fits within the viewport

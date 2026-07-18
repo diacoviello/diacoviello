@@ -48,36 +48,38 @@ export default function Landing() {
           <Link
             to="/lamusica"
             className="half half-left"
-            aria-label="Enter La Música — professional musician and drill designer"
+            aria-label="Enter La Música"
           />
           <Link
             to="/techne"
             className="half half-right"
-            aria-label="Enter Techné — software developer portfolio"
+            aria-label="Enter Techné"
           />
 
           <span className="side-label side-label--left" aria-hidden="true">
             <span className="side-label__title">La&nbsp;Música</span>
-            <span className="side-label__sub">Musician · Drill Designer</span>
+            <span className="side-label__sub">Musician · Educator · Drill Designer</span>
           </span>
           <span className="side-label side-label--right" aria-hidden="true">
             <span className="side-label__title">Techné</span>
-            <span className="side-label__sub">Software Developer</span>
+            <span className="side-label__sub">Software Engineer · Full-Stack Developer</span>
           </span>
         </div>
 
         <div className="landing-hint">
           <span
-            className="landing-hint__side landing-hint__side--left">
-            ♫ Music ♬&nbsp;𝄇</span>
+            className="landing-hint__side landing-hint__side--left"
+            style={ { fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
+            Music&nbsp;</span>
           <span className="landing-hint__divider"
-            style={ { transform: "scaleX(200%)", fontWeight: "108", fontSize: "clamp(1rem, 4vmin, 2rem)" } }>
-            ⟺
+            style={ { transform: "scaleX(200%)", fontWeight: "108", fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
+            ⟸ ⟹
+            {/* ⟺ */}
           </span>
           <span
             className="landing-hint__side landing-hint__side--right"
-            style={ { fontFamily: "'Apple II'", fontSize: "clamp(1rem, 4vmin, 2rem)" } }>
-            ()=&gt;&nbsp;[ Dev ]
+            style={ { fontFamily: "'Apple II'", fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
+            Dev
           </span>
         </div>
       </main>
