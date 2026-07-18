@@ -19,7 +19,7 @@ export const social = [
 ]
 
 export const about = {
-  image: '/images/techne/about/headshot.png',
+  image: '/images/techne/about/SKP_2301.jpg',
   paragraphs: [
     'Hello, and welcome to my developer portfolio.',
     'I attended Rutgers Coding Bootcamp in 2021 and received my certification for **Full-Stack Web Development**. Since then, I have continued working to learn as much as I can involving development, coding, etc. Check out my resume and links to see some projects I’ve done and am currently working on!',

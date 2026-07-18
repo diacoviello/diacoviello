@@ -40,7 +40,7 @@ export default function About() {
         <div className="m-container">
           <div className="m-grid about-grid">
             <Reveal from="left" className="about-portrait">
-              {/* Drop a photo at public/images/headshot.png to replace this frame */}
+              {/* Drop a photo at public/images/SKP_2301.jpg to replace this frame */}
               <div className="about-portrait__frame">
                 <img src={logo} alt="" className="about-portrait__art" />
                 <span className="about-portrait__tag">D. Iacoviello</span>
