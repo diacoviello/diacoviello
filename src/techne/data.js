@@ -7,7 +7,7 @@
 export const profile = {
   name: 'David Iacoviello',
   roles: ['a Developer', 'a Musician', 'an Educator', 'a Lifelong Learner'],
-  tagline: 'Full-stack web developer with a musician’s ear for detail.',
+  tagline: 'Full-stack web developer with a musician\'s ear for detail.',
   resumeUrl:
     'https://drive.google.com/file/d/1rakyDb6IEw6FRVOPJjkFdugiogypxS8f/view?usp=sharing',
 }
@@ -22,17 +22,22 @@ export const about = {
   image: '/images/techne/about/SKP_2301.jpg',
   paragraphs: [
     'Hello, and welcome to my developer portfolio.',
-    'I attended Rutgers Coding Bootcamp in 2021 and received my certification for **Full-Stack Web Development**. Since then, I have continued working to learn as much as I can involving development, coding, etc. Check out my resume and links to see some projects I’ve done and am currently working on!',
-    'Alongside my abilities with development libraries and technologies, I am fluent in using music software as well as GIMP for photo editing. In general, I am passionate about learning the in’s and out’s of anything related to technology and music. I find my motivation for learning comes naturally to me and I am always up for a new challenge!',
+    'I attended Rutgers Coding Bootcamp in 2021 and received my certification for **Full-Stack Web Development**. Since then, I have continued working to learn as much as I can involving development, coding, and emerging technologies. I am currently working as a **Production Support Engineer** at **accesso Technology Group**, where I provide technical support for production systems, troubleshoot issues, and collaborate with development teams to resolve problems.',
+    'My technical foundation spans multiple languages including **JavaScript, Java, and Python**, with fluency in **MySQL and SQL databases**. I am experienced with modern cloud platforms like **AWS** and actively exploring artificial intelligence tools including **Claude and ChatGPT**. Alongside my technical abilities, I am fluent in music software and GIMP for photo editing. I am passionate about continuously learning and tackling new challenges in technology and music.',
   ],
   skills: [
     'JavaScript',
+    'Java',
+    'Python',
     'React',
     'Node.js',
     'HTML & CSS',
-    'Python',
+    'MySQL',
+    'SQL',
+    'AWS',
     'REST APIs',
     'Git / GitHub',
+    'Claude & ChatGPT',
     'Material UI',
     'Music Software',
     'GIMP',
