@@ -1,10 +1,15 @@
 import { useEffect, useRef } from 'react'
 
 /* Glyph pools — music notation (gold) vs. code tokens (cyan/green) */
-const NOTES=[ '♪', '♫', '♩', '♬', '𝄞', '♭', '♯', '𝄢', '𝄪', '𝄫']
+const NOTES=[
+  '𝅘𝅥𝅮', '♫', '♩', '♬', '𝄞', '♭', '♯', '𝄢', '𝄪', '𝄫', '♮', '𝄇', '𝄐', '𝄡', '𝆒',
+  '𝄵', '𝄿', '𝄽', '𝄾', '𝄴', '𝅘𝅥𝅯', '𝅘𝅥', '𝅗𝅥', '𝆑', '𝆏', '𝆗', '𝄌', '𝄋', '𝄎', '🎼'
+]
 const CODE = [
   '{ }', '</>', '=>', '( )', '[ ]', '&&', '||', '::', '!=', '++',
   '01', '10', 'fn', 'const', '#', ';', '/*', '*/', '<div>', '()=>',
+  '+', '-', '*', '/', '=', '<', '>', '&', '|', '!', '%', '^', '~', 'var',
+  'let', 'if', 'else', 'return', 'import', 'export', 'class'
 ]
 
 const pick = (arr) => arr[(Math.random() * arr.length) | 0]
