@@ -9,7 +9,7 @@ export const profile = {
   roles: ['a Developer', 'a Musician', 'an Educator', 'a Lifelong Learner'],
   tagline: 'Full-stack web developer with a musician\'s ear for detail.',
   resumeUrl:
-    'https://drive.google.com/file/d/1tlf4xHOIqUR-00Z-0ZaPUIoPUPSlD0QF/view?usp=sharing',
+    'https://drive.google.com/file/d/1yh9wotG4-t3atBriCtTsy9U2qVohz5ab/view?usp=sharing',
 }
 
 export const social = [
