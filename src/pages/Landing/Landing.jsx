@@ -55,15 +55,6 @@ export default function Landing() {
             className="half half-right"
             aria-label="Enter Techné"
           />
-
-          <span className="side-label side-label--left" aria-hidden="true">
-            <span className="side-label__title">La&nbsp;Música</span>
-            <span className="side-label__sub">Musician · Educator · Drill Designer</span>
-          </span>
-          <span className="side-label side-label--right" aria-hidden="true">
-            <span className="side-label__title">Techné</span>
-            <span className="side-label__sub">Software Engineer · Full-Stack Developer</span>
-          </span>
         </div>
 
         <div className="landing-hint">
@@ -73,12 +64,14 @@ export default function Landing() {
             Music&nbsp;</span>
           <span className="landing-hint__divider"
             style={ { transform: "scaleX(200%)", fontWeight: "108", fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
-            ⟸ ⟹
+            <span className="landing-hint__divider-part landing-hint__divider-part--left">⟸</span>
+            <span className="landing-hint__divider-gap">&nbsp;</span>
+            <span className="landing-hint__divider-part landing-hint__divider-part--right">⟹</span>
             {/* ⟺ */}
           </span>
           <span
             className="landing-hint__side landing-hint__side--right"
-            style={ { fontFamily: "'Apple II'", fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
+            style={ { fontFamily: "'Apple II'", fontSize: "clamp(.05rem, 4vmin, 2rem)", fontWeight: "bolder" } }>
             Dev
           </span>
         </div>
