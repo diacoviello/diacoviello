@@ -31,7 +31,8 @@
   position: relative;
   height: 100vh;
   height: 100dvh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: visible;
   background:
     radial-gradient(
       130% 100% at 50% 42%,
@@ -70,23 +71,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: clamp(0.9rem, 4vh, 3rem);
-  padding: clamp(0.75rem, 3vh, 2rem) 1.25rem;
+  padding: clamp(1rem, 3vh, 2rem) 1.25rem clamp(2rem, 7vh, 5rem);
   max-width: 100vw;
-  max-height: 100%;
+  height: 100%;
   text-align: center;
 }
 
 .landing-eyebrow {
   font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 4vmin, 2.3rem);
+  font-weight: bolder;
+  font-size: clamp(2.3rem, 8vmin, 100%);
   letter-spacing: 0.23em;
   text-transform: uppercase;
   color: var(--gold);
   text-indent: 0.42em;
-  opacity: 0;
+  opacity: 0.8;
   animation: fade-down 1.4s ease forwards 0.4s;
-  text-shadow: 0 0 24px rgba(233, 189, 85, 0.35);
+  /* text-shadow: 0 0 24px rgba(42, 29, 0, 0.35); */
+  text-shadow:
+      1px 1px 2px rgb(214, 207, 0, 1),
+      0 0 0.8em rgba(224, 255, 131, 0.821),
+      0 0 0.6em rgba(255, 233, 67, 0.771);
 }
 
 .landing-hint {
@@ -101,12 +108,14 @@
   color: var(--ink-dim);
   opacity: 0;
   animation: fade-up 1.4s ease forwards 2.4s;
+  /* Sit a little higher, closer to the logo */
+  margin-top: clamp(-2.5rem, -3vh, -1rem);
 }
 .landing-hint__side--left {
   /* border:#070a16 4px solid; */
   font-family: 'RealBook';
   font-style: italic;
-  justify-self: center;
+  justify-self: stretch;
   letter-spacing: 0.04em;
   grid-column: 1;
   display: flex;
@@ -118,7 +127,7 @@
 .landing-hint__side--right {
   /* border: #070a16 4px solid; */
   font-family: var(--font-code);
-  justify-self: center;
+  justify-self: stretch;
   grid-column: 3;
   letter-spacing: 0.1em;
   padding-right: 0.1em;
@@ -136,6 +145,32 @@
   line-height: 2;
   vertical-align: top;
   grid-column: 2 / span 1;
+}
+.landing-hint__divider-part {
+  display: inline-block;
+  color: var(--ink-dim);
+  transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
+  transform: scale(1);
+  font-size: 1em;
+}
+.landing-hint__divider-part--left {
+  transform-origin: right center;
+}
+.landing-hint__divider-part--right {
+  transform-origin: left center;
+}
+
+.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__divider-part--left,
+.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__divider-part--left {
+  color: #fbff10;
+  transform: scale(1.2);
+  font-size: 1.15em;
+}
+.logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__divider-part--right,
+.logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__divider-part--right {
+  color: #00ca28;
+  transform: scale(1.2);
+  font-size: 1.15em;
 }
 
 /* ---- Split logo ------------------------------------------------ */
@@ -232,123 +267,83 @@
     drop-shadow(0 0 72px rgba(255, 244, 220, 0.4));
 }
 
-/* Reveal the matching label on hover/focus of each half */
-.logo-split:has(.half-left:hover) .side-label--left,
-.logo-split:has(.half-left:focus-visible) .side-label--left,
-.logo-split:has(.half-right:hover) .side-label--right,
-.logo-split:has(.half-right:focus-visible) .side-label--right {
-  opacity: 1;
-  transform: translate(0, -50%);
-  z-index: 10;
-}
-
-/* Highlight landing-hint text on logo hover */
+/* Highlight landing-hint text on logo hover. The words now also grow slightly
+   on hover, using transform so the layout doesn’t reflow. */
 .landing-hint__side--left,
 .landing-hint__side--right {
   color: var(--ink-dim);
-  transition: color 0.3s ease, font-size 0.3s ease, filter 0.3s ease;
+  transition: color 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+  transform-origin: center;
+  transform: scale(1);
 }
 
 .logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left,
 .logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left {
-  color: var(--gold-bright);
-  font-size: clamp(1.2rem, 4vw, 2rem);
-  font-weight: 600;
+  color: #fbff10;
   filter: drop-shadow(0 0 12px rgba(233, 189, 85, 0.5));
-}
-
-.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left::after,
-.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left::after {
-  content: 'Musician · Educator · Drill Designer';
-  display: block;
-  font-size: clamp(0.65rem, 1.8vw, 0.95rem);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  margin-top: 0.35rem;
-  opacity: 1;
+  transform: scale(1.12);
 }
 
 .logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__side--right,
 .logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__side--right {
-  color: var(--cyan-bright);
-  font-size: clamp(1.2rem, 4vw, 2rem);
-  font-weight: 600;
+  color: #00ca28;
   filter: drop-shadow(0 0 12px rgba(79, 211, 196, 0.5));
+  transform: scale(1.12);
 }
 
+/* ---- Hover sub-text -------------------------------------------------------
+   The subtitle is an ::after anchored to the word and taken OUT of flow
+   (position: absolute), so it drops straight down beneath Music / Dev on hover
+   without ever pushing the words up or shifting the divider. */
+.landing-hint__side {
+  position: relative;
+}
+
+.landing-hint__side::after {
+  position: absolute;
+  top: 100%;
+  /* Stretch the hover boxes toward the center and slightly past the logo edges. */
+  left: clamp(-4.5rem, -12vw, -8rem);
+  right: clamp(-4.5rem, -12vw, -8rem);
+  max-width: min(calc(100% + 16rem), 54vw);
+  box-sizing: border-box;
+  padding: 0 1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: break-word;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.45em;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.landing-hint__side--left::after {
+  /* Non-breaking spaces (\0000A0) glue each role — and its trailing "·" —
+     together, leaving a normal breakable space only AFTER each "·". So when the
+     line wraps it splits one role per line (Musician · / Educator · / Drill
+     Designer) rather than mid-phrase. */
+  /* border: #070a16 4px solid; */
+  content: 'Musician · Educator\0000A0 · Arranger\0000A0 · Composer\0000A0 · Visual/Drill\0000A0Designer';
+}
+.landing-hint__side--right::after {
+  /* Same as the left: non-breaking spaces keep each role together, so wrapping
+     splits at the "·" (Software Engineer · / Full-Stack Developer) rather than
+     mid-phrase. */
+  /* border:#070a16 4px solid; */
+  content: 'Software\0000A0Engineer · Full\002011Stack\0000A0Developer · Visual\0000A0Designs';
+}
+
+.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left::after,
+.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left::after,
 .logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__side--right::after,
 .logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__side--right::after {
-  content: 'Software Engineer · Full-Stack Developer';
-  display: block;
-  font-size: clamp(0.65rem, 1.8vw, 0.95rem);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  margin-top: 0.35rem;
-  opacity: 1;
-}
-
-
-/* ---- Side labels ---------------------------------------------- */
-
-.side-label {
-  position: absolute;
-  top: 50%;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.45s ease, transform 0.45s ease;
-  max-width: 150px;
-}
-
-.side-label--left {
-  right: 100%;
-  margin-right: clamp(0.5rem, 3vw, 2.5rem);
-  text-align: right;
-  align-items: flex-end;
-  transform: translate(12px, -50%);
-}
-.side-label--right {
-  left: 100%;
-  margin-left: clamp(0.5rem, 3vw, 2.5rem);
-  text-align: left;
-  align-items: flex-start;
-  transform: translate(-12px, -50%);
-}
-
-.side-label__title {
-  display: none;
-}
-
-
-.side-label__sub {
-  font-family: var(--font-sans);
-  font-size: clamp(0.85rem, 2vw, 1.2rem);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold-bright);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  margin-top: 0.5rem;
-  font-weight: 500;
-  filter: drop-shadow(0 0 12px rgba(233, 189, 85, 0.5));
-  display: block;
-  white-space: pre;
-  line-height: 1.3;
-}
-
-.side-label--right .side-label__sub {
-  color: var(--cyan-bright);
-  filter: drop-shadow(0 0 12px rgba(79, 211, 196, 0.5));
-}
-
-/* Show subtitle on hover */
-.logo-split:has(.half-left:hover) .side-label--left .side-label__sub,
-.logo-split:has(.half-left:focus-visible) .side-label--left .side-label__sub,
-.logo-split:has(.half-right:hover) .side-label--right .side-label__sub,
-.logo-split:has(.half-right:focus-visible) .side-label--right .side-label__sub {
   opacity: 1;
 }
 
@@ -390,27 +385,11 @@
     column-gap: clamp(0.5em, 2vw, 1em);
     font-size: clamp(1rem, 4vmin, 1.5rem);
   }
-  .side-label {
-    top: auto;
-    bottom: -3.4rem;
-    transform: none;
-  }
-  .side-label--left {
-    right: 50%;
-    margin-right: 0.6rem;
-  }
-  .side-label--right {
-    left: 50%;
-    margin-left: 0.6rem;
-  }
-  .half-left:hover ~ .side-label--left,
-  .half-left:focus-visible ~ .side-label--left,
-  .half-right:hover ~ .side-label--right,
-  .half-right:focus-visible ~ .side-label--right {
-    transform: none;
-  }
-  .side-label__sub {
-    display: none;
+  .landing-hint__side::after {
+    left: 0;
+    right: 0;
+    max-width: none;
+    padding: 0 0.5rem;
   }
 }
 
