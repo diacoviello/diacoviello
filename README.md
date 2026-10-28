@@ -26,19 +26,44 @@ npm run build      # outputs to dist/ (also writes dist/404.html for SPA routing
 npm run preview    # preview the production build locally
 ```
 
-## Deploy (GitHub Pages)
+## Deploy (Cloudflare Workers)
 
-The build emits everything Pages needs:
-
-- `dist/CNAME` → custom domain `diacoviello.com`
-- `dist/404.html` → SPA fallback so deep links (`/lamusica/about`, `/techne/projects`) resolve
-- `dist/.nojekyll` → disables Jekyll processing
+The app is deployed as a Cloudflare Worker with static assets
+([`wrangler.jsonc`](wrangler.jsonc)). Static files are served directly, with
+SPA fallback so deep links (`/lamusica/about`, `/techne/projects`) resolve;
+only `/api/*` requests run the Worker code in [`worker/index.js`](worker/index.js).
 
 ```bash
-npm run deploy     # builds and publishes dist/ to the gh-pages branch
+npm run deploy     # builds and runs `wrangler deploy`
 ```
 
-DNS for `diacoviello.com` is managed in Cloudflare and points at GitHub Pages.
+## Contact form
+
+Both halves have a Contact page (`/lamusica/contact`, `/techne/contact`) built
+on one shared component, [`src/shared/contact/ContactForm.jsx`](src/shared/contact/ContactForm.jsx).
+It posts to `/api/contact`; the Worker checks the honeypot, verifies
+[Turnstile](https://developers.cloudflare.com/turnstile/) and sends the message
+with [Resend](https://resend.com), with Reply-To set to the visitor.
+
+One-time setup:
+
+1. **Resend:** create an account, add and verify the `diacoviello.com` domain
+   (DNS records in Cloudflare), then create an API key. The sender is
+   `CONTACT_FROM` in `wrangler.jsonc`.
+2. **Turnstile:** in the Cloudflare dashboard, add a widget for
+   `diacoviello.com` (and `localhost` if you want the real widget locally).
+3. **Production secrets:**
+   ```bash
+   npx wrangler secret put RESEND_API_KEY
+   npx wrangler secret put TURNSTILE_SECRET_KEY
+   npx wrangler secret put CONTACT_TO          # inbox that receives messages
+   ```
+4. **Site key:** copy `.env.example` to `.env.production.local` and set
+   `VITE_TURNSTILE_SITE_KEY` before running `npm run deploy`.
+
+Local dev: copy `.dev.vars.example` to `.dev.vars`. `npm run dev` runs the
+Worker locally, and uses Cloudflare's always-pass Turnstile test keys unless
+you set real ones.
 
 ## Content
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import QuoteBlock from '../components/QuoteBlock.jsx'
 import './Resources.css'
@@ -173,7 +174,7 @@ export default function Resources() {
           <Reveal className="res-note">
             <p>
               Want drill design for your ensemble, or a custom arrangement?{' '}
-              <a href="mailto:iacoviello.david@gmail.com">Get in touch →</a>
+              <Link to="/lamusica/contact">Get in touch →</Link>
             </p>
           </Reveal>
         </div>
