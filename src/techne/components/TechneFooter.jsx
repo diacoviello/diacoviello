@@ -20,6 +20,7 @@ export default function TechneFooter() {
           <Link to="/techne/education">Education</Link>
           <Link to="/techne/experience">Experience</Link>
           <Link to="/techne/projects">Projects</Link>
+          <Link to="/techne/contact">Contact</Link>
           <a href={profile.resumeUrl} target="_blank" rel="noreferrer noopener">
             Resume
           </a>

@@ -7,6 +7,7 @@ import Education from './pages/Education.jsx'
 import Background from './pages/Background.jsx'
 import Experience from './pages/Experience.jsx'
 import Resources from './pages/Resources.jsx'
+import Contact from './pages/Contact.jsx'
 import './MusicaApp.css'
 
 export default function MusicaApp() {
@@ -28,6 +29,7 @@ export default function MusicaApp() {
           <Route path="background" element={<Background />} />
           <Route path="experience" element={<Experience />} />
           <Route path="resources" element={<Resources />} />
+          <Route path="contact" element={<Contact />} />
           <Route path="*" element={<Navigate to="/lamusica" replace />} />
         </Routes>
       </main>

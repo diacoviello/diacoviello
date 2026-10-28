@@ -11,6 +11,7 @@ const NAV = [
   { label: 'Education', to: '/techne/education' },
   { label: 'Experience', to: '/techne/experience' },
   { label: 'Projects', to: '/techne/projects' },
+  { label: 'Contact', to: '/techne/contact' },
 ]
 
 export default function TechneNav() {

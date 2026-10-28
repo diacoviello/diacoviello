@@ -31,6 +31,7 @@ const NAV = [
       { label: 'Performances', to: '/lamusica/resources#performances' },
     ],
   },
+  { label: 'Contact', to: '/lamusica/contact' },
 ]
 
 export default function MusicaNav() {

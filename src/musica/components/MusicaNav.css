@@ -324,8 +324,9 @@
   }
 }
 
-/* ---- Responsive ---- */
-@media (max-width: 920px) {
+/* ---- Responsive ----
+   Wider breakpoint than Techné's nav: brand + 7 links + cross-link need ~1120px without the brand wrapping. */
+@media (max-width: 1140px) {
   .mnav__links,
   .mnav__cross {
     display: none;

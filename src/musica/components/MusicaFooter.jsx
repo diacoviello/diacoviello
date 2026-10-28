@@ -18,11 +18,11 @@ export default function MusicaFooter() {
           <Link to="/lamusica/education">Education</Link>
           <Link to="/lamusica/experience">Experience</Link>
           <Link to="/lamusica/resources">Resources</Link>
+          <Link to="/lamusica/contact">Contact</Link>
           <Link to="/techne">Techné</Link>
         </nav>
 
         <div className="mfooter__contact">
-          <a href="mailto:iacoviello.david@gmail.com">iacoviello.david@gmail.com</a>
           <Link to="/" className="mfooter__home">
             ← Back to landing
           </Link>

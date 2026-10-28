@@ -1,0 +1,140 @@
+/* ============================================================
+   Contact page + form — shared by La Música and Techné.
+   Accent colours come from --accent* (gold / cyan per side).
+   ============================================================ */
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: clamp(1.6rem, 4vw, 3rem);
+  align-items: start;
+}
+.contact-aside h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 0.8rem;
+}
+.contact-aside p {
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.contact-aside .m-pills {
+  margin-top: 1.2rem;
+}
+.contact-aside__note {
+  font-size: 0.88rem;
+  color: var(--ink-dim) !important;
+}
+
+/* ---- Form card ---- */
+.cform {
+  display: grid;
+  gap: 1.1rem;
+  padding: clamp(1.3rem, 4vw, 2rem);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: linear-gradient(160deg, rgba(27, 35, 71, 0.6), rgba(13, 18, 38, 0.6));
+  box-shadow: var(--shadow);
+}
+.cform__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.1rem;
+}
+.cform__field {
+  position: relative;
+  display: grid;
+  gap: 0.4rem;
+}
+.cform__field > span {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.cform input,
+.cform select,
+.cform textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: rgba(7, 10, 22, 0.55);
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.cform textarea {
+  resize: vertical;
+  min-height: 9rem;
+}
+.cform select {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 2.4rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
+  background-position: calc(100% - 1.15rem) 50%, calc(100% - 0.8rem) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+.cform select option {
+  background: var(--bg-soft);
+}
+.cform input:focus,
+.cform select:focus,
+.cform textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.18);
+}
+.cform__count {
+  justify-self: end;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+}
+
+/* Honeypot — kept in the DOM but off-screen. */
+.cform__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cform__turnstile {
+  min-height: 65px;
+}
+
+.cform__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+.cform__actions .m-btn {
+  border: 0;
+}
+.cform__actions .m-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+.cform__status {
+  flex: 1;
+  min-width: 200px;
+  font-size: 0.94rem;
+  color: var(--accent-bright);
+}
+.cform__status.is-error {
+  color: #ff8a8a;
+}
+
+@media (max-width: 760px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}

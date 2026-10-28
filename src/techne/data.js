@@ -15,7 +15,6 @@ export const profile = {
 export const social = [
   { network: 'linkedin', label: 'LinkedIn', href: 'http://www.linkedin.com/in/david-iacoviello' },
   { network: 'github', label: 'GitHub', href: 'https://github.com/diacoviello' },
-  { network: 'email', label: 'Email', href: 'mailto:iacoviello.david@gmail.com' },
 ]
 
 export const about = {
