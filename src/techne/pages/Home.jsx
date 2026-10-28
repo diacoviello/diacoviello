@@ -81,7 +81,7 @@ export default function Home() {
             <div>
               <h2 className="m-sec-title">Also a musician &amp; drill designer</h2>
               <p className="m-lead" style={{ margin: '0.6rem 0 0' }}>
-                The yin to this yang — performance, marching-arts design, and music
+                The yin to this yang: performance, marching-arts design, and music
                 education live on the La Música side.
               </p>
             </div>

@@ -86,7 +86,7 @@ const SUBSECTIONS = [
         role: 'Private Lessons — Trumpet & More',
         org: 'Independent Studio',
         date: 'Ongoing',
-        body: 'Personalized lessons covering technique, reading, theory, and audition prep for students of all levels — beginner to advanced.',
+        body: 'Personalized lessons covering technique, reading, theory, and audition prep for students of all levels beginner to advanced.',
       },
       {
         role: 'Clinics & Masterclasses',
@@ -144,7 +144,7 @@ export default function Experience() {
         />
         <Reveal as="p" className="m-lead" delay={ 0.1 }>
           A foundation built in higher education and refined on the competitive
-          field — formal study paired with hands-on craft.
+          field; formal study paired with hands-on craft.
         </Reveal>
       </header>
 

@@ -9,7 +9,7 @@ export default function Experience() {
         <Reveal as="h1" delay={0.05}>Building &amp; shipping</Reveal>
         <div className="m-divider" />
         <Reveal as="p" className="m-lead" delay={0.1}>
-          Hands-on development work — from production software to community-driven
+          Hands-on development work from production software to community-driven
           open-source projects.
         </Reveal>
       </header>

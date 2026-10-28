@@ -70,10 +70,10 @@ export default function About() {
               <p>
                 Away from the stage and the field, I serve as the New Jersey State
                 Director for <strong>Taps for Veterans</strong>, a non-profit that
-                provides live buglers — free of charge — to perform Taps at military
+                provides live buglers free of charge to perform Taps at military
                 funerals and events. We’re pushing back against the spread of digital
                 recordings, because those who served our country deserve a real, live
-                performance in their honor — not a recording.
+                performance in their honor, not a recording.
               </p>
 
               <div className="about-tags">

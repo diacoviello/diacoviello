@@ -10,7 +10,7 @@ export default function Education() {
         <Reveal as="h1" delay={0.05}>Where I learned the craft</Reveal>
         <div className="m-divider" />
         <Reveal as="p" className="m-lead" delay={0.1}>
-          A full-stack certification on top of a music degree — code and
+          A full-stack certification on top of a music degree; code and
           composition, side by side.
         </Reveal>
       </header>

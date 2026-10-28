@@ -15,7 +15,7 @@ const CHAPTERS = [
   {
     year: 'The Field',
     title: 'Finding the marching arts',
-    body: 'Marching band reframed everything. Here, music wasn’t just heard — it was seen. Visual design, drill, and choreography became as important to me as the notes themselves.',
+    body: 'Marching band reframed everything. Here, music wasn’t just heard, it was seen. Visual design, drill, and choreography became as important to me as the notes themselves.',
   },
   {
     year: 'The Craft',
@@ -63,7 +63,7 @@ export default function Background() {
 
           <Reveal className="bg-quote">
             <p>
-              “Music is the silence between the notes — and the marching arts taught
+              “Music is the silence between the notes, and the marching arts taught
               me that the space between performers tells just as much of the story.”
             </p>
           </Reveal>

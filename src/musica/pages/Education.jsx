@@ -44,7 +44,7 @@ export default function Education() {
         />
         <Reveal as="p" className="m-lead" delay={0.1}>
           A foundation built in higher education and refined on the competitive
-          field — formal study paired with hands-on craft.
+          field; formal study paired with hands-on craft.
         </Reveal>
       </header>
 

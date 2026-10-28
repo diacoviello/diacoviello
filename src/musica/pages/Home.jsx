@@ -9,7 +9,7 @@ const HIGHLIGHTS = [
   {
     icon: '𝄞',
     title: 'Performance',
-    body: 'A versatile performer with years on stage — from concert halls to the competitive field.',
+    body: 'A versatile performer with years on stage, from concert halls to the competitive field.',
   },
   {
     icon: '✎',
@@ -36,7 +36,7 @@ export default function Home() {
               author="Aristotle"
             />
             <Reveal as="p" className="home-hero__lead" from="up" delay={0.16}>
-              I’m David Iacoviello — a professional musician, marching-arts drill
+              I’m David Iacoviello, a professional musician, marching-arts drill
               designer, and educator. This is where performance, pedagogy, and
               visual design meet.
             </Reveal>

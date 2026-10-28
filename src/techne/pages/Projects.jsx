@@ -11,7 +11,7 @@ export default function Projects() {
         <Reveal as="h1" delay={0.05}>Things I’ve built</Reveal>
         <div className="m-divider" />
         <Reveal as="p" className="m-lead" delay={0.1}>
-          A selection of web apps, tools, and experiments — many at the
+          A selection of web apps, tools, and experiments, many at the
           intersection of code and music.
         </Reveal>
       </header>
