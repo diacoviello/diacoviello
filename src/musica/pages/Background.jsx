@@ -25,7 +25,7 @@ const CHAPTERS = [
   {
     year: 'Today',
     title: 'Performing, designing, giving back',
-    body: 'Now I split my time between the stage, the design table, and the classroom — and I serve as New Jersey State Director for Taps for Veterans, honoring those who served with live Taps. It’s all one thing: passing on the discipline, creativity, and meaning that music gave me.',
+    body: 'Now I split my time between the stage, the design table, and the classroom as well as I serve as New Jersey State Director for Taps for Veterans, honoring those who served with live Taps. It’s all one thing: passing on the discipline, creativity, and meaning that music gave me.',
   },
 ]
 

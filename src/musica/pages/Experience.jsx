@@ -126,7 +126,7 @@ const SUBSECTIONS = [
         role: 'NJ State Director — Taps for Veterans',
         org: 'Taps for Veterans · non-profit',
         date: 'Present',
-        body: 'Lead the New Jersey chapter of a non-profit that provides live buglers, free of charge, to perform Taps at military funerals and events — so every veteran is honored with a real, live performance rather than a recording.',
+        body: 'Lead the New Jersey chapter of a non-profit that provides live buglers, free of charge, to perform Taps at military funerals and events so every veteran is honored with a real, live performance rather than a recording.',
       },
     ],
   },
