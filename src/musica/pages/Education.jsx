@@ -8,7 +8,7 @@ const QUOTE_AUTHOR = ''
 const TIMELINE = [
   {
     date: '2007 — 2012',
-    title: 'Bachelor of Music',
+    title: 'Bachelor of Music in Trumpet & Music Education, minor in Philosophy',
     org: 'William Paterson University',
     body: 'Comprehensive training in theory, history, performance, and music education. ',
   },

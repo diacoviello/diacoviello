@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import TechneNav from './components/TechneNav.jsx'
 import TechneFooter from './components/TechneFooter.jsx'
+import Reaper from './components/Reaper.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Education from './pages/Education.jsx'
@@ -33,6 +34,8 @@ export default function TechneApp() {
       </main>
 
       <TechneFooter />
+
+      <Reaper />
     </div>
   )
 }

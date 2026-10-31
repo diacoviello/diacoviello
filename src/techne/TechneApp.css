@@ -77,6 +77,18 @@
   z-index: 1;
 }
 
+/* Reaper box transparency. Only the background uses --bg, so text and button stay solid. */
+saas-is-dead {
+  --bg: rgb(255 255 255 / 0.88);
+  text-align: center;
+  font-size: 0.1rem;
+}
+saas-is-dead[data-dark] {
+  --bg: rgb(25 22 31 / 0.88);
+  text-align: center;
+  font-size: 0.1rem;
+}
+
 /* ---- Typewriter ---- */
 .tw {
   color: var(--accent-bright);
