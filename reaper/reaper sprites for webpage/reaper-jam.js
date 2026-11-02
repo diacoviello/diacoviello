@@ -23,6 +23,10 @@
  *   data-sheet="/js/reaper-jam-sheet.webp"
  *                      play hand-drawn frames instead of the overlay props (see SHEET below);
  *                      if the sheet fails to load, the overlay version runs instead
+ *   data-moves="hop,wink,doze"   which idle moves to play between breaks (default: all);
+ *                      glance, hop, wink, content, lookaround, ponder, research, doze, stroll;
+ *                      "off" disables them
+ *   data-moves-every="10-25"     seconds of idle between moves (random in that range)
  *
  * Prop placement (CSS on your page; custom properties pass into the shadow DOM).
  * Values are percentages of the Reaper's sprite box:
@@ -32,6 +36,7 @@
  *   }
  *
  * JS:  ReaperJam.play()  start a break now     ReaperJam.stop()  pack up now
+ *      ReaperJam.move("doze")  play a move now (no name = random)   ReaperJam.moves  enabled moves
  */
 (() => {
   "use strict";
@@ -102,6 +107,77 @@
       25% { translate: 0 -3%; rotate: -2deg; }
       75% { translate: 0 -3%; rotate: 2deg; }
     }
+  `;
+
+  // IDLE MOVES: short animations built from frames v1's own sheet already has but never plays.
+  // Each frame is [row, column, ms]. v1's sheet is 8 columns x 11 rows. w = how often it's picked.
+  const run = (row, from, to, ms) => Array.from({ length: to - from + 1 }, (_, i) => [row, from + i, ms]);
+  const walk = (row, n) => Array.from({ length: n }, (_, i) => [row, i % 8, 90]);
+  const MOVES = {
+    glance: { w: 2, seq: [[0, 5, 900], [0, 6, 900]] },
+    hop: { w: 3, seq: [[4, 0, 140], [4, 1, 110], [4, 2, 240], [4, 3, 110], [4, 4, 200]] },
+    wink: { w: 3, seq: [[8, 1, 900], [8, 0, 150], [8, 4, 700], [8, 0, 150]] },
+    content: { w: 2, seq: [[8, 3, 1600]] },
+    lookaround: { w: 3, seq: [...run(10, 0, 7, 110), ...run(9, 0, 7, 110), [9, 7, 250]] },
+    ponder: { w: 2, seq: [[6, 0, 150], [6, 1, 1300], [6, 2, 600], [6, 3, 1100], [6, 4, 1100], [6, 5, 250]] },
+    research: { w: 1, seq: [[7, 0, 1300], [7, 1, 1300], [7, 2, 900], [7, 3, 1300], [7, 4, 1300], [7, 5, 1300]] },
+    // Zs float up while he's curled up asleep (frame 5 of the row), from 1450ms to 4650ms.
+    doze: { w: 1, seq: [[5, 0, 300], [5, 1, 400], [5, 2, 400], [5, 3, 350], [5, 4, 3200], [5, 5, 300], [5, 6, 600], [5, 7, 600]], z: [1450, 4650] },
+    // Walks toward the middle of the screen and back. Only when the speech bubble is closed.
+    stroll: {
+      w: 2,
+      closedOnly: true,
+      seq: [...walk(2, 12), [0, 0, 350], ...walk(1, 12), [0, 0, 100]],
+      seqLeft: [...walk(1, 12), [0, 0, 350], ...walk(2, 12), [0, 0, 100]],
+    },
+  };
+  const moveList = (() => {
+    const v = (ds.moves || "").trim().toLowerCase();
+    if (v === "off" || v === "none" || v === "0") return [];
+    const names = v ? v.split(/[\s,]+/).filter((n) => MOVES[n]) : Object.keys(MOVES);
+    return names;
+  })();
+  const gap = (() => {
+    const m = String(ds.movesEvery || "10-25").match(/^\s*(\d+(?:\.\d+)?)\s*(?:-\s*(\d+(?:\.\d+)?))?\s*$/);
+    const a = m ? +m[1] : 10;
+    const b = m && m[2] ? +m[2] : a;
+    return () => (Math.min(a, b) + Math.random() * Math.abs(b - a)) * 1000;
+  })();
+
+  const seqKeys = (name, seq, rows) => {
+    const total = sum(seq.map((f) => f[2]));
+    const pos = ([r, c]) => `${((c / 7) * 100).toFixed(4)}% ${((r / (rows - 1)) * 100).toFixed(4)}%`;
+    let t = 0;
+    const stops = seq.map((f) => {
+      const s = `${((t / total) * 100).toFixed(3)}% { background-position: ${pos(f)}; }`;
+      t += f[2];
+      return s;
+    });
+    return `@keyframes ${name} { ${stops.join(" ")} 100% { background-position: ${pos(seq[seq.length - 1])}; } }`;
+  };
+  const moveMs = (name, left) => sum((left && MOVES[name].seqLeft ? MOVES[name].seqLeft : MOVES[name].seq).map((f) => f[2]));
+  const strollMs = moveMs("stroll");
+  const walkOut = (sum(walk(2, 12).map((f) => f[2])) / strollMs) * 100;
+  const walkBack = ((sum(walk(2, 12).map((f) => f[2])) + 350) / strollMs) * 100;
+  const walkHome = ((2 * sum(walk(2, 12).map((f) => f[2])) + 350) / strollMs) * 100;
+  const movesCss = `
+    :host { --rm-dir: -1; --rm-k: 1; }
+    :host([position="left"]) { --rm-dir: 1; }
+    :host([data-minimized]) { --rm-k: .6; }
+    :host([data-move]) .sprite { animation-timing-function: steps(1, end); animation-iteration-count: 1; animation-fill-mode: both; }
+    ${Object.keys(MOVES)
+      .map((n) => `:host([data-move="${n}"]) .sprite { animation-name: rmove-${n}; animation-duration: ${moveMs(n)}ms; }
+    ${seqKeys(`rmove-${n}`, MOVES[n].seq, 11)}`)
+      .join("\n    ")}
+    :host([position="left"][data-move="stroll"]) .sprite { animation-name: rmove-stroll-l; }
+    ${seqKeys("rmove-stroll-l", MOVES.stroll.seqLeft, 11)}
+    /* v1's own walk-in covers (width + gutter) in 16 frames; 12 frames = 75% of that, so feet don't slide */
+    :host([data-move="stroll"]) .arrival { animation: rmove-path ${strollMs}ms linear both; }
+    @keyframes rmove-path {
+      0%, ${walkHome.toFixed(2)}%, 100% { translate: 0 0; }
+      ${walkOut.toFixed(2)}%, ${walkBack.toFixed(2)}% { translate: calc((var(--width) + var(--gutter)) * .75 * var(--rm-k) * var(--rm-dir)) 0; }
+    }
+    .jam-z { color: var(--muted); }
   `;
 
   const css = `
@@ -206,6 +282,7 @@
       100% { opacity: 0; translate: var(--dx, 0px) calc(var(--width) * -.75); scale: .9; rotate: var(--r, 15deg); }
     }
     ${sheetUrl ? sheetCss : ""}
+    ${moveList.length ? movesCss : ""}
   `;
 
   // Headphones: band arcs over the top of the head, cups sit at the sides.
@@ -351,9 +428,62 @@
       layer.append(n);
     }
 
+    // ---- idle moves ----
+    let moveName = null;
+    let moveElapsed = 0;
+    let moveDur = 0;
+    let moveWait = gap();
+    let zAcc = 0;
+    let lastMove = "";
+
+    function pickMove() {
+      const open = host.hasAttribute("data-open");
+      const pool = moveList.filter((n) => n !== lastMove && !(MOVES[n].closedOnly && open));
+      const total = sum(pool.map((n) => MOVES[n].w));
+      let r = Math.random() * total;
+      for (const n of pool) if ((r -= MOVES[n].w) < 0) return n;
+      return pool[0];
+    }
+    function startMove(name) {
+      if (!name || !MOVES[name]) return;
+      moveName = lastMove = name;
+      moveElapsed = 0;
+      zAcc = 0;
+      moveDur = moveMs(name, host.getAttribute("position") === "left");
+      host.setAttribute("data-move", name);
+    }
+    function endMove() {
+      if (!moveName) return;
+      moveName = null;
+      host.removeAttribute("data-move");
+      moveWait = gap();
+    }
+    function spawnZ() {
+      const left = host.getAttribute("position") === "left";
+      const z = document.createElement("span");
+      z.className = "jam-note jam-z";
+      z.innerHTML = `<svg viewBox="0 0 24 24"><path d="M6 6h12L6 18h12" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      const x = rand(52, 66);
+      z.style.left = `${left ? 100 - x : x}%`;
+      z.style.top = `${rand(48, 58)}%`;
+      z.style.setProperty("--dx", `${(left ? -1 : 1) * rand(8, 22)}px`);
+      z.style.setProperty("--r", `${rand(-15, 15)}deg`);
+      z.style.setProperty("--d", `${rand(2.4, 3)}s`);
+      z.style.setProperty("--s", rand(0.09, 0.14).toFixed(3));
+      z.addEventListener("animationend", () => z.remove(), { once: true });
+      layer.append(z);
+    }
+
     const ctrl = {
       play() {
-        if (eligible() && (stage === "wait" || stage === "done")) setStage("reach");
+        if (eligible() && (stage === "wait" || stage === "done")) {
+          endMove();
+          setStage("reach");
+        }
+      },
+      move(name) {
+        if (eligible() && !moveName && (stage === "wait" || stage === "done") && !host.hasAttribute("data-fallback"))
+          startMove(name || pickMove());
       },
       stop() {
         if (stage === "reach" || stage === "tap" || stage === "dance") setStage("pack");
@@ -381,6 +511,7 @@
       }
       // v1 replaying its walk-in, motion turned off, etc.: abort and start the wait over.
       if (!eligible()) {
+        endMove();
         if (stage !== "wait" || elapsed) {
           setStage(stage === "done" ? "done" : "wait");
           target = cfg.delay;
@@ -388,6 +519,20 @@
         return;
       }
       if (document.hidden) return; // freeze in place, like v1 does
+
+      // A move is playing: let it finish. The music-break countdown keeps running; if it comes
+      // due mid-move, the break starts as soon as the move ends.
+      if (moveName) {
+        if (stage === "wait") elapsed += dt;
+        moveElapsed += dt;
+        const z = MOVES[moveName].z;
+        if (z && moveElapsed >= z[0] && moveElapsed < z[1] && (zAcc += dt) >= 650) {
+          zAcc = 0;
+          spawnZ();
+        }
+        if (moveElapsed >= moveDur) endMove();
+        return;
+      }
 
       elapsed += dt;
       const dur = durations(host);
@@ -422,6 +567,12 @@
           }
           break;
       }
+
+      // Between music breaks, play an idle move every so often.
+      if ((stage === "wait" || stage === "done") && moveList.length && !host.hasAttribute("data-fallback")) {
+        moveWait -= dt;
+        if (moveWait <= 0) startMove(pickMove());
+      }
     }, 100);
 
     controllers.set(host, ctrl);
@@ -441,6 +592,8 @@
   });
 
   window.ReaperJam = {
+    moves: moveList.slice(),
+    move: (name) => controllers.forEach((c) => c.move(name)),
     play: () => controllers.forEach((c) => c.play()),
     stop: () => controllers.forEach((c) => c.stop()),
   };

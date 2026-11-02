@@ -4,7 +4,7 @@ import jamSheet from '../../../reaper/reaper sprites for webpage/reaper-jam-shee
 
 const overrides = `
   .bubble { width: min(333px, calc(100vw - 2*var(--gutter) - env(safe-area-inset-right,0px))); padding: 10px 12px; }
-  .message { margin: 0; padding-right: 18px; font-size: 14px; }
+  .message { margin: 0; padding-right: 18px; font-size: 14px; white-space: pre-line; }
   .description { margin-top: 4px; font-size: 11px; line-height: 1.4; }
   .visit { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; padding: 6px 10px; }
   .visit img { width: 18px; height: 18px; object-fit: contain; }
@@ -62,7 +62,7 @@ export default function Reaper() {
       </saas-is-dead>
       <script src="https://saasisdead.si/reaper/v1.js" async crossOrigin="anonymous" />
       {/* A classic script, not an import: it reads its options from document.currentScript. */}
-      <script src={jamScript} data-sheet={jamSheet} async />
+      <script src={jamScript} data-sheet={jamSheet} data-dance="5" data-moves-every="8" async />
     </>
   )
 }
