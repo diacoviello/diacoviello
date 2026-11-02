@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import jamScript from '../../../reaper/reaper sprites for webpage/reaper-jam.js?url'
+import jamSheet from '../../../reaper/reaper sprites for webpage/reaper-jam-sheet.webp'
 
 const overrides = `
   .bubble { width: min(333px, calc(100vw - 2*var(--gutter) - env(safe-area-inset-right,0px))); padding: 10px 12px; }
@@ -59,6 +61,8 @@ export default function Reaper() {
         <a href="https://saasisdead.si/" target="_blank" rel="noopener">SaaS is dead</a>
       </saas-is-dead>
       <script src="https://saasisdead.si/reaper/v1.js" async crossOrigin="anonymous" />
+      {/* A classic script, not an import: it reads its options from document.currentScript. */}
+      <script src={jamScript} data-sheet={jamSheet} async />
     </>
   )
 }
