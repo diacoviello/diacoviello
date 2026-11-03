@@ -2,6 +2,14 @@ import { useEffect, useRef } from 'react'
 import jamScript from '../../../reaper/reaper sprites for webpage/reaper-jam.js?url'
 import jamSheet from '../../../reaper/reaper sprites for webpage/reaper-jam-sheet.webp'
 
+// v1 remembers a dismissal for 14 days. Forget it on each page load so a refresh replays
+// the whole intro; closing him still holds while moving around the site without reloading.
+try {
+  localStorage.removeItem('saasisdead_reaper_v1_dismissed')
+} catch {
+  // Storage is blocked, so there is nothing to clear.
+}
+
 const overrides = `
   .bubble { width: min(333px, calc(100vw - 2*var(--gutter) - env(safe-area-inset-right,0px))); padding: 10px 12px; }
   .message { margin: 0; padding-right: 18px; font-size: 14px; white-space: pre-line; }
@@ -62,7 +70,13 @@ export default function Reaper() {
       </saas-is-dead>
       <script src="https://saasisdead.si/reaper/v1.js" async crossOrigin="anonymous" />
       {/* A classic script, not an import: it reads its options from document.currentScript. */}
-      <script src={jamScript} data-sheet={jamSheet} data-dance="5" data-moves-every="8" async />
+      <script
+        src={jamScript}
+        data-sheet={jamSheet}
+        data-moves="glance,hop,wink,content,lookaround,ponder,research,doze"
+        data-moves-every="8"
+        async
+      />
     </>
   )
 }

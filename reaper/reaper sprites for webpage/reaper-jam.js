@@ -16,7 +16,7 @@
  *
  * Options (data attributes on this <script> tag):
  *   data-delay="20"    seconds of idle before the first music break
- *   data-dance="16"    seconds of dancing per break
+ *   data-dance="16"    seconds of dancing per break (overrides SECONDS.dance below)
  *   data-repeat="40"   seconds of idle between breaks; "0" = only once per page load
  *   data-bpm="120"     dance tempo (60–180)
  *   data-debug         start after 1.5s, dance forever, show alignment crosshairs
@@ -42,6 +42,21 @@
   "use strict";
   if (window.ReaperJam) return;
 
+  // HOW LONG EACH ANIMATION LASTS, in seconds. Change a number here and rebuild.
+  // Moves keep their frame proportions, so a longer time plays the whole move slower.
+  const SECONDS = {
+    dance: 5,
+    glance: 1.8,
+    hop: 0.8,
+    wink: 1.9,
+    content: 1.6,
+    lookaround: 2,
+    ponder: 4.5,
+    research: 7.4,
+    doze: 6.2,
+    stroll: 2.61,
+  };
+
   const script = document.currentScript;
   const ds = (script && script.dataset) || {};
   const nonce = (script && script.nonce) || "";
@@ -49,7 +64,7 @@
   const debug = "debug" in ds;
   const cfg = {
     delay: debug ? 1500 : Math.max(0, num(ds.delay, 20)) * 1000,
-    dance: debug ? Infinity : Math.max(2, num(ds.dance, 16)) * 1000,
+    dance: debug ? Infinity : Math.max(2, num(ds.dance, SECONDS.dance)) * 1000,
     repeat: Math.max(0, num(ds.repeat, 40)) * 1000,
     bpm: Math.min(180, Math.max(60, num(ds.bpm, 120))),
   };
@@ -131,6 +146,13 @@
       seqLeft: [...walk(1, 12), [0, 0, 350], ...walk(2, 12), [0, 0, 100]],
     },
   };
+  // Stretch each move's frames (and the doze Z window) to fill its time in SECONDS.
+  for (const [name, move] of Object.entries(MOVES)) {
+    if (!(SECONDS[name] > 0)) continue;
+    const k = (SECONDS[name] * 1000) / sum(move.seq.map((f) => f[2]));
+    for (const seq of [move.seq, move.seqLeft]) if (seq) for (const f of seq) f[2] *= k;
+    if (move.z) move.z = move.z.map((t) => t * k);
+  }
   const moveList = (() => {
     const v = (ds.moves || "").trim().toLowerCase();
     if (v === "off" || v === "none" || v === "0") return [];
@@ -157,9 +179,11 @@
   };
   const moveMs = (name, left) => sum((left && MOVES[name].seqLeft ? MOVES[name].seqLeft : MOVES[name].seq).map((f) => f[2]));
   const strollMs = moveMs("stroll");
-  const walkOut = (sum(walk(2, 12).map((f) => f[2])) / strollMs) * 100;
-  const walkBack = ((sum(walk(2, 12).map((f) => f[2])) + 350) / strollMs) * 100;
-  const walkHome = ((2 * sum(walk(2, 12).map((f) => f[2])) + 350) / strollMs) * 100;
+  const walkMs = sum(MOVES.stroll.seq.slice(0, 12).map((f) => f[2]));
+  const turnMs = MOVES.stroll.seq[12][2];
+  const walkOut = (walkMs / strollMs) * 100;
+  const walkBack = ((walkMs + turnMs) / strollMs) * 100;
+  const walkHome = ((2 * walkMs + turnMs) / strollMs) * 100;
   const movesCss = `
     :host { --rm-dir: -1; --rm-k: 1; }
     :host([position="left"]) { --rm-dir: 1; }
