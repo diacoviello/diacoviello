@@ -60,7 +60,7 @@ export default function Reaper() {
       <saas-is-dead
         ref={ref}
         story="support"
-        message="Companies give people&#39;s jobs to AI, then people recreate their products using the same AI.&#10;Natural Balance."
+        message="Companies give people&#39;s jobs to AI.&#10;People recreate their products&#10;using the same AI. Natural Balance."
         /* message="If they're going to use AI to take our jobs, we'll can use AI to take theirs too!" */
         size="small"
         position="right"

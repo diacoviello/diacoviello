@@ -45,7 +45,7 @@
   // HOW LONG EACH ANIMATION LASTS, in seconds. Change a number here and rebuild.
   // Moves keep their frame proportions, so a longer time plays the whole move slower.
   const SECONDS = {
-    dance: 5,
+    dance: 9,
     glance: 1.8,
     hop: 0.8,
     wink: 1.9,
