@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
-import jamScript from '../../../reaper/reaper sprites for webpage/reaper-jam.js?url'
-import jamSheet from '../../../reaper/reaper sprites for webpage/reaper-jam-sheet.webp'
+import jamScript from '../../../reaper/reaper-custom/reaper-jam.js?url'
+import jamSheet from '../../../reaper/reaper-custom/reaper-jam-sheet.webp'
 
 // v1 remembers a dismissal for 14 days. Forget it on each page load so a refresh replays
 // the whole intro; closing him still holds while moving around the site without reloading.

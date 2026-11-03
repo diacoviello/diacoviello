@@ -48,4 +48,4 @@ dist-ssr
 !.env.example
 
 # reaper customization files
-/reaper/
+reaper/reaper-custom/
