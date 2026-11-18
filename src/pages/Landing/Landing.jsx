@@ -17,6 +17,8 @@ const wallTs = Array.from({ length: WALL_STEPS }, (_, i) => (i / WALL_STEPS).toF
 // SVG has no z-index; paint order is DOM order. Keep the popped half on top so the
 // other half collapsing underneath never paints over it. The *other* half is moved,
 // never the popped one, so its :hover and running transition aren't disturbed.
+// Pointer only, not keyboard focus: moving the other half before the focused one would
+// make Tab skip it.
 function raise(half) {
   if (!half) return
   for (const other of half.parentNode.querySelectorAll(':scope > .half')) {
@@ -42,7 +44,6 @@ function Half({ to, label, side, tone, armed, onPointerDown, onPointerUp, onClic
       aria-label={label}
       data-side={side}
       onPointerEnter={raiseSelf}
-      onFocus={raiseSelf}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onClick={onClick}
@@ -61,8 +62,8 @@ const isTouch = (event) => event.pointerType === 'touch' || event.pointerType ==
 export default function Landing() {
   const logoRef = useRef(null)
 
-  // Touch opens a half in two taps: the first pops it ("armed", held by .is-armed in
-  // Landing.css), a second tap on the same half opens it. Mouse, trackpad and keyboard
+  // Touch opens a side in two taps: the first pops its half ("armed", held by .is-armed in
+  // Landing.css), a second tap on that half or its hint word/arrow opens it. Mouse, trackpad and keyboard
   // open on the first click. Decided per tap, so touch laptops work either way.
   // Arming happens on finger lift, not on click: iOS Safari can swallow the first click
   // when a tap reveals hover content, which would otherwise make it three taps.
@@ -84,7 +85,8 @@ export default function Landing() {
   const disarmOutside = (event) => {
     if (!event.target.closest?.('.yinyang .half, .landing-hint__trigger')) setArmed(null)
   }
-  const halfProps = { onPointerDown: onHalfPointerDown, onPointerUp: armOnTouch, onClick: onHalfClick }
+  // Shared by the halves and the hint links.
+  const tapProps = { onPointerDown: onHalfPointerDown, onPointerUp: armOnTouch, onClick: onHalfClick }
 
   return (
     <div className="landing" onPointerDown={disarmOutside}>
@@ -133,8 +135,8 @@ export default function Landing() {
             <image className="base" href={base} x="-215.29" y="-215.29" width="430.57" height="430.57" />
 
             {/* White half pops left into La Música, black half pops right into Techné. */}
-            <Half to="/lamusica" label="Enter La Música" side="left" tone="white" armed={armed === 'left'} {...halfProps} />
-            <Half to="/techne" label="Enter Techné" side="right" tone="black" armed={armed === 'right'} {...halfProps} />
+            <Half to="/lamusica" label="Enter La Música" side="left" tone="white" armed={armed === 'left'} {...tapProps} />
+            <Half to="/techne" label="Enter Techné" side="right" tone="black" armed={armed === 'right'} {...tapProps} />
           </svg>
         </div>
 
@@ -142,27 +144,53 @@ export default function Landing() {
           <span
             className="landing-hint__side landing-hint__side--left"
             style={ { fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
-            <span className="landing-hint__trigger landing-hint__trigger--left" data-side="left" onPointerEnter={raiseFromHint} onPointerUp={armOnTouch}>
+            <Link
+              to="/lamusica"
+              className="landing-hint__trigger landing-hint__trigger--left"
+              aria-label="Enter La Música"
+              data-side="left"
+              onPointerEnter={raiseFromHint}
+              onFocus={raiseFromHint}
+              {...tapProps}>
               Music&nbsp;
-            </span>
+            </Link>
           </span>
           <span className="landing-hint__divider"
             style={ { transform: "scaleX(200%)", fontWeight: "108", fontSize: "clamp(.05rem, 4vmin, 2rem)" } }>
-            <span
+            {/* The arrows are links for pointer users only; the word beside each is the
+                keyboard and screen-reader link, so there's one tab stop per side. */}
+            <Link
+              to="/lamusica"
               className="landing-hint__divider-part landing-hint__divider-part--left landing-hint__trigger landing-hint__trigger--left"
-              data-side="left" onPointerEnter={raiseFromHint} onPointerUp={armOnTouch}>⟸</span>
+              tabIndex={-1}
+              aria-hidden="true"
+              data-side="left"
+              onPointerEnter={raiseFromHint}
+              {...tapProps}>⟸</Link>
             <span className="landing-hint__divider-gap">&nbsp;</span>
-            <span
+            <Link
+              to="/techne"
               className="landing-hint__divider-part landing-hint__divider-part--right landing-hint__trigger landing-hint__trigger--right"
-              data-side="right" onPointerEnter={raiseFromHint} onPointerUp={armOnTouch}>⟹</span>
+              tabIndex={-1}
+              aria-hidden="true"
+              data-side="right"
+              onPointerEnter={raiseFromHint}
+              {...tapProps}>⟹</Link>
             {/* ⟺ */}
           </span>
           <span
             className="landing-hint__side landing-hint__side--right"
             style={ { fontFamily: "'Apple II'", fontSize: "clamp(.05rem, 4vmin, 2rem)", fontWeight: "bolder" } }>
-            <span className="landing-hint__trigger landing-hint__trigger--right" data-side="right" onPointerEnter={raiseFromHint} onPointerUp={armOnTouch}>
+            <Link
+              to="/techne"
+              className="landing-hint__trigger landing-hint__trigger--right"
+              aria-label="Enter Techné"
+              data-side="right"
+              onPointerEnter={raiseFromHint}
+              onFocus={raiseFromHint}
+              {...tapProps}>
               Dev
-            </span>
+            </Link>
           </span>
         </div>
       </main>

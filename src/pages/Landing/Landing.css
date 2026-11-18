@@ -159,13 +159,13 @@
   transform-origin: left center;
 }
 
-.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:hover) .landing-hint .landing-hint__divider-part--left {
+.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:is(:hover, :focus-visible)) .landing-hint .landing-hint__divider-part--left {
   color: #fbff10;
   /* Grow by transform only (1.2 x the old 1.15em): a font-size change reflows the row and
      slides the arrow out from under the pointer, which flickers now that it's a trigger. */
   transform: scale(1.38);
 }
-.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:hover) .landing-hint .landing-hint__divider-part--right {
+.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:is(:hover, :focus-visible)) .landing-hint .landing-hint__divider-part--right {
   color: #00ca28;
   /* Grow by transform only (1.2 x the old 1.15em): a font-size change reflows the row and
      slides the arrow out from under the pointer, which flickers now that it's a trigger. */
@@ -295,11 +295,11 @@
 }
 
 /* Popped state: hovering/focusing a half, a first tap on it with touch (.is-armed, see
-   Landing.jsx), or hovering its hint word or arrow
+   Landing.jsx), or hovering its hint word or arrow (or keyboard focus on the word)
    ("Music ⟸" pops the white half, "⟹ Dev" the black one). */
 .yinyang .half:is(:hover, :focus-visible, .is-armed) use:not(.hit),
-.landing-stage:has(.landing-hint__trigger--left:hover) .yinyang .half-left use:not(.hit),
-.landing-stage:has(.landing-hint__trigger--right:hover) .yinyang .half-right use:not(.hit) {
+.landing-stage:has(.landing-hint__trigger--left:is(:hover, :focus-visible)) .yinyang .half-left use:not(.hit),
+.landing-stage:has(.landing-hint__trigger--right:is(:hover, :focus-visible)) .yinyang .half-right use:not(.hit) {
   visibility: visible;
   transform:
     translate(calc(var(--pop-x) * var(--dir) * var(--t)), 0)
@@ -313,8 +313,8 @@
 }
 
 .yinyang .half:is(:hover, :focus-visible, .is-armed) .pop,
-.landing-stage:has(.landing-hint__trigger--left:hover) .yinyang .half-left .pop,
-.landing-stage:has(.landing-hint__trigger--right:hover) .yinyang .half-right .pop {
+.landing-stage:has(.landing-hint__trigger--left:is(:hover, :focus-visible)) .yinyang .half-left .pop,
+.landing-stage:has(.landing-hint__trigger--right:is(:hover, :focus-visible)) .yinyang .half-right .pop {
   filter: drop-shadow(calc(3px * var(--dir)) 4px 3px rgb(0 0 0 / 0.3));
 }
 
@@ -322,8 +322,8 @@
 @media (prefers-reduced-motion: reduce) {
   .yinyang .half use:not(.hit),
   .yinyang .half:is(:hover, :focus-visible, .is-armed) use:not(.hit),
-  .landing-stage:has(.landing-hint__trigger--left:hover) .yinyang .half-left use:not(.hit),
-  .landing-stage:has(.landing-hint__trigger--right:hover) .yinyang .half-right use:not(.hit) {
+  .landing-stage:has(.landing-hint__trigger--left:is(:hover, :focus-visible)) .yinyang .half-left use:not(.hit),
+  .landing-stage:has(.landing-hint__trigger--right:is(:hover, :focus-visible)) .yinyang .half-right use:not(.hit) {
     transition-duration: 150ms, 0s;
     transition-timing-function: ease;
     transition-delay: 0ms, 0ms;
@@ -340,13 +340,13 @@
   transform: scale(1);
 }
 
-.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:hover) .landing-hint .landing-hint__side--left {
+.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:is(:hover, :focus-visible)) .landing-hint .landing-hint__side--left {
   color: #fbff10;
   filter: drop-shadow(0 0 12px rgba(233, 189, 85, 0.5));
   transform: scale(1.12);
 }
 
-.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:hover) .landing-hint .landing-hint__side--right {
+.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:is(:hover, :focus-visible)) .landing-hint .landing-hint__side--right {
   color: #00ca28;
   filter: drop-shadow(0 0 12px rgba(79, 211, 196, 0.5));
   transform: scale(1.12);
@@ -365,6 +365,8 @@
 }
 .landing-hint__trigger {
   pointer-events: auto;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .landing-hint__side::after {
@@ -408,8 +410,8 @@
   content: 'Software\0000A0Engineer · Full\002011Stack\0000A0Developer · Visual\0000A0Designs';
 }
 
-.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:hover) .landing-hint .landing-hint__side--left::after,
-.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:hover) .landing-hint .landing-hint__side--right::after {
+.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:is(:hover, :focus-visible)) .landing-hint .landing-hint__side--left::after,
+.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:is(:hover, :focus-visible)) .landing-hint .landing-hint__side--right::after {
   opacity: 1;
 }
 
