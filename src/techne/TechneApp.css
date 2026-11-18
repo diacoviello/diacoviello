@@ -202,6 +202,21 @@ saas-is-dead[data-dark] {
   font-size: 0.78rem;
   color: var(--ink-dim);
 }
+.tfooter__reaper {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.tfooter__reaper:hover {
+  color: var(--accent);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .techne-bg__grid,

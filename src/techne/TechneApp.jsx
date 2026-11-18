@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import TechneNav from './components/TechneNav.jsx'
 import TechneFooter from './components/TechneFooter.jsx'
@@ -10,7 +11,33 @@ import Projects from './pages/Projects.jsx'
 import Contact from './pages/Contact.jsx'
 import './TechneApp.css'
 
+// Hiding the Reaper lasts until the tab closes; the footer link brings him back sooner.
+const REAPER_KEY = 'techne-reaper-hidden'
+
+function readReaperHidden() {
+  try {
+    return sessionStorage.getItem(REAPER_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+function saveReaperHidden(hidden) {
+  try {
+    if (hidden) sessionStorage.setItem(REAPER_KEY, '1')
+    else sessionStorage.removeItem(REAPER_KEY)
+  } catch {
+    // Storage is blocked: he stays hidden or back for this page view only.
+  }
+}
+
 export default function TechneApp() {
+  const [reaperHidden, setReaperHidden] = useState(readReaperHidden)
+  const setReaper = useCallback((hidden) => {
+    saveReaperHidden(hidden)
+    setReaperHidden(hidden)
+  }, [])
+
   return (
     <div className="techne">
       <div className="techne-bg" aria-hidden="true">
@@ -33,9 +60,9 @@ export default function TechneApp() {
         </Routes>
       </main>
 
-      <TechneFooter />
+      <TechneFooter reaperHidden={reaperHidden} onBringBackReaper={() => setReaper(false)} />
 
-      <Reaper />
+      <Reaper gone={reaperHidden} onDismiss={() => setReaper(true)} />
     </div>
   )
 }

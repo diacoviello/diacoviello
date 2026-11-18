@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { profile, social } from '../data.js'
 import SocialIcons from './SocialIcons.jsx'
 
-export default function TechneFooter() {
+export default function TechneFooter({ reaperHidden = false, onBringBackReaper }) {
   const year = new Date().getFullYear()
   return (
     <footer className="tfooter">
@@ -34,7 +34,17 @@ export default function TechneFooter() {
           </Link>
         </div>
       </div>
-      <p className="tfooter__legal">© {year} David Iacoviello. All rights reserved.</p>
+      <p className="tfooter__legal">
+        © {year} David Iacoviello. All rights reserved.
+        {reaperHidden && (
+          <>
+            {' · '}
+            <button type="button" className="tfooter__reaper" onClick={onBringBackReaper}>
+              Bring back Reaper
+            </button>
+          </>
+        )}
+      </p>
     </footer>
   )
 }
