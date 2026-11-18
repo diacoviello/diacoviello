@@ -25,7 +25,6 @@ dist-ssr
 
 # Large source / reference media — not used at runtime (the site uses the
 # optimized public/images/diablo-symbol.png). Kept out of the repo to stay lean.
-/public/images/Landing Page.png
 /public/images/landing-page-idea.mov
 /public/images/DIABLOENMUSICA SYMBOL 2025 copy.png
 /public/images/DIABLOENMUSICA SYMBOL 2026 Left.png
@@ -55,3 +54,6 @@ dist-ssr
 
 # screenshots from visual checks (local only)
 /screenshot_tests/
+
+# unused images moved out of public/ (local only, not deployed)
+/BACKUPS/

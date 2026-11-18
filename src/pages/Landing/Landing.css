@@ -149,9 +149,8 @@
 .landing-hint__divider-part {
   display: inline-block;
   color: var(--ink-dim);
-  transition: color 0.3s ease, transform 0.3s ease, font-size 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
   transform: scale(1);
-  font-size: 1em;
 }
 .landing-hint__divider-part--left {
   transform-origin: right center;
@@ -160,17 +159,17 @@
   transform-origin: left center;
 }
 
-.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__divider-part--left,
-.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__divider-part--left {
+.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:hover) .landing-hint .landing-hint__divider-part--left {
   color: #fbff10;
-  transform: scale(1.2);
-  font-size: 1.15em;
+  /* Grow by transform only (1.2 x the old 1.15em): a font-size change reflows the row and
+     slides the arrow out from under the pointer, which flickers now that it's a trigger. */
+  transform: scale(1.38);
 }
-.logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__divider-part--right,
-.logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__divider-part--right {
+.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:hover) .landing-hint .landing-hint__divider-part--right {
   color: #00ca28;
-  transform: scale(1.2);
-  font-size: 1.15em;
+  /* Grow by transform only (1.2 x the old 1.15em): a font-size change reflows the row and
+     slides the arrow out from under the pointer, which flickers now that it's a trigger. */
+  transform: scale(1.38);
 }
 
 /* ---- Split logo ------------------------------------------------ */
@@ -202,69 +201,133 @@
   animation: halo-pulse 6s ease-in-out infinite 2.6s;
 }
 
-/* Full emblem underneath — always visible. */
-.emblem-base {
+/* ---- Yin-yang pop ------------------------------------------------------
+   Each half extrudes out of the emblem on hover/focus: an 80-slice wall
+   (light at the base, dark at the front) under the popped artwork face.
+   Built in Landing.jsx; the animation itself is pure CSS. */
+
+.yinyang {
+  /* Tunables */
+  --pop-scale: 1.42;       /* final size: 42% larger */
+  /* Travel distance (SVG units; the yin-yang radius is 100, the base image spans ±215).
+     72 keeps both halves inside the base image, even at the peak of the overshoot.
+     If you raise --pop-scale or --pop-rot, lower this. */
+  --pop-x: 72px;
+  --pop-rot: -8deg;        /* tilt of the black half; the white half tilts the mirror way */
+
+  --dur-in: 650ms;         /* pop out */
+  --dur-out: 160ms;        /* snap back: short so moving to the other half feels immediate */
+  --ease-in: cubic-bezier(0.34, 1.56, 0.64, 1);  /* overshoot = "pop" */
+  --ease-out: cubic-bezier(0.4, 0, 1, 1);        /* quick accelerate home */
+  --stagger: 0ms;          /* >0 makes the wall lag/stretch behind the lead shape (try 60ms) */
+
+  --yy-ink: #000;
+  --yy-paper: #fff;
+
   position: absolute;
   inset: 0;
   z-index: 1;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  transition: filter 0.5s ease;
+  overflow: visible;
 }
 
-/* Pre-authored "popped" halves (Left.png / Right.png), each drawn at its final
-   grown-out position on the same canvas as the base. At rest they're hidden and
-   pulled toward the emblem's center; on hover the matching one grows outward to
-   its natural (reference) position with an off-white glow. */
-.emblem-pop {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  pointer-events: none;
-  opacity: 0;
-  transform-origin: 50% 50%;
-  transform: scale(0.62);
-  transition:
-    transform 0.6s cubic-bezier(0.34, 1.32, 0.5, 1),
-    opacity 0.4s ease,
-    filter 0.6s ease;
-  will-change: transform, opacity, filter;
+/* Per-half settings. Both walls shade light at the base → dark at the front:
+   a light base stays distinct from the other half, and a dark front frames the popped face. */
+.yinyang .half.black {
+  --dir: 1;                 /* pops right */
+  --face: var(--yy-ink);
+  --eye: var(--yy-paper);
+  --wall-base: #e4e4e4;
+  --wall-front: #3a3a3a;
+}
+.yinyang .half.white {
+  --dir: -1;                /* pops left */
+  --face: var(--yy-paper);
+  --eye: var(--yy-ink);
+  --wall-base: #e4e4e4;
+  --wall-front: #3a3a3a;
 }
 
-/* Transparent hit areas — clip-path limits each anchor's clickable/hover region
-   to its half, so the two never steal each other's hover. */
-.half {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  display: block;
+/* Styles reach into <use> clones via inherited custom properties, not descendant selectors. */
+.yinyang .eye-dot { fill: var(--eye-fill); }
+
+.yinyang .half {
+  cursor: pointer;
+  outline: none;
   -webkit-tap-highlight-color: transparent;
 }
-.half-left {
-  clip-path: inset(0 50% 0 0);
-}
-.half-right {
-  clip-path: inset(0 0 0 50%);
-}
-.half:focus-visible {
-  outline: none;
+
+/* Everything that moves: wall slices + the popped face.
+   pointer-events: none → hover is decided ONLY by the stationary .hit shapes, which match the base image.
+   (If moving pieces were hoverable, a popped half would overlap the other half's base and steal its hover.) */
+.yinyang .half use:not(.hit) {
+  pointer-events: none;
+  fill: var(--face);
+  --eye-fill: var(--eye);
+  /* transform in SVG user units, pivoting near each half's visual centre */
+  transform-box: view-box;
+  transform-origin: calc(25px * var(--dir)) 0px;
+  will-change: transform;
+  /* hidden at rest so the base image shows untouched;
+     stays visible until the (quick) collapse has finished */
+  visibility: hidden;
+  transition:
+    transform var(--dur-out) var(--ease-out),
+    visibility 0s linear;
+  transition-delay:
+    calc(var(--t) * var(--stagger)),
+    calc(var(--dur-out) + var(--stagger));
 }
 
-/* Grow the matching half out to its reference position, glowing off-white. */
-.logo-split:has(.half-left:hover) .emblem-pop--left,
-.logo-split:has(.half-left:focus-visible) .emblem-pop--left,
-.logo-split:has(.half-right:hover) .emblem-pop--right,
-.logo-split:has(.half-right:focus-visible) .emblem-pop--right {
-  opacity: 1;
-  transform: scale(1);
-  filter:
-    drop-shadow(0 0 16px rgba(255, 250, 240, 0.9))
-    drop-shadow(0 0 38px rgba(255, 246, 230, 0.6))
-    drop-shadow(0 0 72px rgba(255, 244, 220, 0.4));
+/* The stationary, transparent hit area: the only thing that triggers a half. */
+.yinyang .half .hit {
+  fill: transparent;
+  --eye-fill: transparent;
+}
+
+/* Wall slices: opaque, shaded base → front, no eye (it would smear a streak through the wall).
+   Same specificity as the rule above, so it must stay after it. */
+.yinyang .half use.wall {
+  color: color-mix(in oklab, var(--wall-base), var(--wall-front) calc(var(--t) * 100%));
+  fill: currentColor;
+  --eye-fill: currentColor;
+}
+
+/* Popped state: hovering/focusing a half, a first tap on it with touch (.is-armed, see
+   Landing.jsx), or hovering its hint word or arrow
+   ("Music ⟸" pops the white half, "⟹ Dev" the black one). */
+.yinyang .half:is(:hover, :focus-visible, .is-armed) use:not(.hit),
+.landing-stage:has(.landing-hint__trigger--left:hover) .yinyang .half-left use:not(.hit),
+.landing-stage:has(.landing-hint__trigger--right:hover) .yinyang .half-right use:not(.hit) {
+  visibility: visible;
+  transform:
+    translate(calc(var(--pop-x) * var(--dir) * var(--t)), 0)
+    scale(calc(1 + (var(--pop-scale) - 1) * var(--t)))
+    rotate(calc(var(--pop-rot) * var(--dir) * var(--t)));
+  transition:
+    transform var(--dur-in) var(--ease-in),
+    visibility 0s;
+  /* pop out: lead shape first, wall lags behind */
+  transition-delay: calc((1 - var(--t)) * var(--stagger)), 0s;
+}
+
+.yinyang .half:is(:hover, :focus-visible, .is-armed) .pop,
+.landing-stage:has(.landing-hint__trigger--left:hover) .yinyang .half-left .pop,
+.landing-stage:has(.landing-hint__trigger--right:hover) .yinyang .half-right .pop {
+  filter: drop-shadow(calc(3px * var(--dir)) 4px 3px rgb(0 0 0 / 0.3));
+}
+
+/* Reduced motion: quick, no overshoot */
+@media (prefers-reduced-motion: reduce) {
+  .yinyang .half use:not(.hit),
+  .yinyang .half:is(:hover, :focus-visible, .is-armed) use:not(.hit),
+  .landing-stage:has(.landing-hint__trigger--left:hover) .yinyang .half-left use:not(.hit),
+  .landing-stage:has(.landing-hint__trigger--right:hover) .yinyang .half-right use:not(.hit) {
+    transition-duration: 150ms, 0s;
+    transition-timing-function: ease;
+    transition-delay: 0ms, 0ms;
+  }
 }
 
 /* Highlight landing-hint text on logo hover. The words now also grow slightly
@@ -277,15 +340,13 @@
   transform: scale(1);
 }
 
-.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left,
-.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left {
+.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:hover) .landing-hint .landing-hint__side--left {
   color: #fbff10;
   filter: drop-shadow(0 0 12px rgba(233, 189, 85, 0.5));
   transform: scale(1.12);
 }
 
-.logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__side--right,
-.logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__side--right {
+.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:hover) .landing-hint .landing-hint__side--right {
   color: #00ca28;
   filter: drop-shadow(0 0 12px rgba(79, 211, 196, 0.5));
   transform: scale(1.12);
@@ -297,6 +358,13 @@
    without ever pushing the words up or shifting the divider. */
 .landing-hint__side {
   position: relative;
+  /* Only the word inside (.landing-hint__trigger) takes the pointer. The column itself
+     stretches and scales up when lit; on phones it would then cover the ⟹ arrow and
+     make it flicker. */
+  pointer-events: none;
+}
+.landing-hint__trigger {
+  pointer-events: auto;
 }
 
 .landing-hint__side::after {
@@ -340,10 +408,8 @@
   content: 'Software\0000A0Engineer · Full\002011Stack\0000A0Developer · Visual\0000A0Designs';
 }
 
-.logo-split:has(.half-left:hover) ~ .landing-hint .landing-hint__side--left::after,
-.logo-split:has(.half-left:focus-visible) ~ .landing-hint .landing-hint__side--left::after,
-.logo-split:has(.half-right:hover) ~ .landing-hint .landing-hint__side--right::after,
-.logo-split:has(.half-right:focus-visible) ~ .landing-hint .landing-hint__side--right::after {
+.landing-stage:has(.half-left:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--left:hover) .landing-hint .landing-hint__side--left::after,
+.landing-stage:has(.half-right:is(:hover, :focus-visible, .is-armed), .landing-hint__trigger--right:hover) .landing-hint .landing-hint__side--right::after {
   opacity: 1;
 }
 
