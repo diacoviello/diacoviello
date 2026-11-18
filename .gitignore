@@ -49,3 +49,9 @@ dist-ssr
 
 # reaper customization files
 /reaper/reaper-custom/reaper-files/
+
+# ref_files
+/ref_files/
+
+# screenshots from visual checks (local only)
+/screenshot_tests/

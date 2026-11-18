@@ -19,6 +19,36 @@ const overrides = `
   :host(:not([data-dark])) .visit img { filter: invert(1) hue-rotate(180deg); }
   .dismiss { right: 0; top: 0; width: 28px; height: 28px; padding: 8px; }
   .dismiss svg { width: 12px; height: 12px; }
+  /* The box is see-through on purpose (TechneApp.css). Blur what shows through so page text doesn't read under it. */
+  .bubble { -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  /* Phones: v1 stacks the box above him, over the page text. Put it beside him as on desktop
+     (same offsets as v1's 640px+ layout), filling the gap between him and the left edge. The
+     message is sized from the box width (cqi) so its three lines fit without rewrapping.
+     The box is centred on his height: its bottom sits at his middle (the sprite is 192x208, so
+     half his height is width*.5417) and transform pulls it down by half its own height. This uses
+     transform, not translate, because v1 animates translate when the box opens. The pull is capped
+     at that same bottom offset so a box taller than him (when minimized) stops at the screen edge. */
+  @media (max-width: 639px) {
+    .bubble {
+      --edges: calc(max(var(--gutter), env(safe-area-inset-left,0px)) + max(var(--gutter), env(safe-area-inset-right,0px)));
+      right: calc(var(--width)*.83); bottom: calc(var(--width)*.5417);
+      transform: translateY(min(50%, var(--width)*.5417));
+      width: min(333px, calc(100vw - var(--edges) - var(--width)*.83));
+      padding: 8px 10px; container-type: inline-size;
+    }
+    /* Minimized he shrinks to .6 from his bottom edge, so his middle drops to width*.325. */
+    :host([data-minimized]) .bubble {
+      right: calc(var(--width)*.51); bottom: calc(var(--width)*.325);
+      transform: translateY(min(50%, var(--width)*.325));
+      width: min(333px, calc(100vw - var(--edges) - var(--width)*.51));
+    }
+    .bubble::after { right: -6px; top: calc(50% - 5px); bottom: auto; border-bottom: 0; border-top: 1px solid var(--border); }
+    /* The longest line is about 18px wide per px of font; the 16px clears the close button. */
+    .message { padding-right: 16px; font-size: clamp(10px, calc((100cqi - 16px) / 19), 14px); }
+    .description { display: none; }
+    .visit { margin-top: 6px; padding: 4px 8px; font-size: 11px; }
+    .visit img { width: 14px; height: 14px; }
+  }
 `
 
 // The script is hosted by saasisdead.si, so its markup can only be changed from

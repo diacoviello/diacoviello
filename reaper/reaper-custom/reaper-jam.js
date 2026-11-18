@@ -428,12 +428,12 @@
         // Bubble closed: notes all around, weighted to the open side of the screen.
         x=Math.random()<0.65? rand( -35, 20 ):rand( 20, 100 );
         y=rand( -10, 55 );
-      } else if ( innerWidth>=640&&!host.hasAttribute( "preview" ) ) {
-        // Desktop: the bubble sits to the side, so keep notes above and right of it.
+      } else if ( !host.hasAttribute( "preview" ) ) {
+        // The bubble sits to the side (the site's Reaper.jsx does this on phones too), so keep notes above and right of it.
         x=rand( 22, 102 );
         y=rand( -15, 35 );
       } else {
-        // Mobile: the bubble sits above, so keep notes beside the body.
+        // Preview: the bubble sits above, so keep notes beside the body.
         x=Math.random()<0.75? rand( -40, -5 ):rand( 95, 104 );
         y=rand( 20, 75 );
       }
