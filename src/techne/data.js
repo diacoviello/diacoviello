@@ -79,6 +79,16 @@ export const experience = [
 
 export const projects = [
   {
+    title: 'Ocarina Note Charts',
+    image: '/images/techne/projects/ocarina-note-charts.png',
+    body: 'Interactive note and fingering charts for the ocarina in *The Legend of Zelda: Ocarina of Time* on Nintendo Switch 2. It maps all 19 pitches (45 inputs) with reference tones, gives fingerings for all 12 major keys, and has a Song Builder that plays back melodies using notes recorded from the game.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Web Audio'],
+    links: [
+      { text: 'GitHub', href: 'https://github.com/diacoviello/LoZ-Ocarina-Note-Charts' },
+      { text: 'Live', href: 'https://diacoviello.github.io/LoZ-Ocarina-Note-Charts/#note-chart' },
+    ],
+  },
+  {
     title: 'The Hatch Timer',
     image: '/images/techne/projects/The-Hatch-Timer.png',
     body: 'The countdown timer from the TV show *LOST*, built with vanilla HTML/CSS/JavaScript. Every 108 minutes the button must be pushed — cosplay as Desmond, Locke, or Jack and see what happens if you miss it.',
